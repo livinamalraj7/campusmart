@@ -252,7 +252,7 @@
             <li><a href="index.jsp">Home</a></li>
             <a href="products.jsp">Products</a>
             <li><a href="#">Categories</a></li>
-            <li><a href="#">Cart 🛒</a></li>
+            <a href="cart.jsp">Cart 🛒</a></li>
             <li>
                 <a href="login.jsp" class="login-btn">Login</a>
             </li>

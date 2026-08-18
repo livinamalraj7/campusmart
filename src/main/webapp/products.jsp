@@ -227,6 +227,10 @@
             cursor: pointer;
 
             font-weight: bold;
+
+            text-decoration: none;
+
+            display: inline-block;
         }
 
         .add-btn:hover {
@@ -264,7 +268,7 @@
                 Categories
             </a>
 
-            <a href="#">
+            <a href="cart">
                 🛒 Cart
             </a>
 
@@ -356,9 +360,10 @@
                     ₹350
                 </span>
 
-                <button class="add-btn">
+                <a href="cart?name=Engineering%20Mathematics&category=Books&price=350&icon=%F0%9F%93%9A"
+                   class="add-btn">
                     Add to Cart
-                </button>
+                </a>
 
             </div>
 

@@ -1,3 +1,4 @@
+```jsp
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <!DOCTYPE html>
@@ -20,22 +21,27 @@
         }
 
         body {
-            background: #f1f5f9;
             min-height: 100vh;
+            background: #f1f5f9;
+            color: #172554;
         }
 
+        /* NAVBAR */
+
         .navbar {
+            height: 70px;
             background: #172554;
-            color: white;
-            padding: 18px 7%;
 
             display: flex;
             align-items: center;
             justify-content: space-between;
+
+            padding: 0 7%;
         }
 
         .logo {
-            font-size: 26px;
+            color: white;
+            font-size: 27px;
             font-weight: bold;
         }
 
@@ -46,11 +52,14 @@
         .home-link {
             color: white;
             text-decoration: none;
+            font-size: 15px;
         }
 
         .home-link:hover {
             color: #93c5fd;
         }
+
+        /* LOGIN AREA */
 
         .login-container {
             min-height: calc(100vh - 70px);
@@ -63,28 +72,32 @@
         }
 
         .login-card {
-            width: 420px;
+            width: 430px;
+            max-width: 100%;
 
             background: white;
 
-            padding: 35px;
+            padding: 38px;
 
-            border-radius: 12px;
+            border-radius: 14px;
 
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.10);
+            box-shadow:
+                0 8px 30px rgba(0, 0, 0, 0.10);
         }
 
         .login-card h1 {
             text-align: center;
-            color: #172554;
+            font-size: 32px;
             margin-bottom: 8px;
         }
 
         .subtitle {
             text-align: center;
             color: #64748b;
-            margin-bottom: 25px;
+            margin-bottom: 28px;
         }
+
+        /* FORM */
 
         .form-group {
             margin-bottom: 20px;
@@ -93,17 +106,18 @@
         .form-group label {
             display: block;
 
+            margin-bottom: 7px;
+
             color: #334155;
 
             font-weight: bold;
-
-            margin-bottom: 7px;
+            font-size: 14px;
         }
 
         .form-group input {
             width: 100%;
 
-            padding: 12px;
+            padding: 13px;
 
             border: 1px solid #cbd5e1;
 
@@ -116,12 +130,19 @@
 
         .form-group input:focus {
             border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px rgba(37, 99, 235, 0.10);
         }
+
+        /* LOGIN BUTTON */
 
         .login-btn {
             width: 100%;
 
             padding: 13px;
+
+            margin-top: 5px;
 
             background: #2563eb;
 
@@ -142,12 +163,16 @@
             background: #1d4ed8;
         }
 
+        /* REGISTER LINK */
+
         .register-text {
             text-align: center;
 
-            margin-top: 20px;
+            margin-top: 22px;
 
             color: #64748b;
+
+            font-size: 14px;
         }
 
         .register-text a {
@@ -162,13 +187,29 @@
             text-decoration: underline;
         }
 
+        /* MOBILE */
+
+        @media (max-width: 500px) {
+
+            .navbar {
+                padding: 0 5%;
+            }
+
+            .login-card {
+                padding: 25px;
+            }
+
+            .login-card h1 {
+                font-size: 27px;
+            }
+        }
+
     </style>
 
 </head>
 
 
 <body>
-
 
     <!-- NAVBAR -->
 
@@ -187,18 +228,23 @@
 
     <!-- LOGIN -->
 
-    <div class="login-container">
+    <main class="login-container">
 
         <div class="login-card">
 
-            <h1>Welcome Back!</h1>
+            <h1>Welcome Back</h1>
 
             <p class="subtitle">
                 Login to your CampusMart account
             </p>
 
 
-            <form>
+            <!-- LOGIN FORM -->
+
+            <form action="login" method="post">
+
+
+                <!-- EMAIL -->
 
                 <div class="form-group">
 
@@ -211,11 +257,12 @@
                         id="email"
                         name="email"
                         placeholder="Enter your email"
-                        required
-                    >
+                        required>
 
                 </div>
 
+
+                <!-- PASSWORD -->
 
                 <div class="form-group">
 
@@ -228,11 +275,12 @@
                         id="password"
                         name="password"
                         placeholder="Enter your password"
-                        required
-                    >
+                        required>
 
                 </div>
 
+
+                <!-- LOGIN BUTTON -->
 
                 <button
                     type="submit"
@@ -242,24 +290,27 @@
 
                 </button>
 
+
             </form>
 
+
+            <!-- REGISTER LINK -->
 
             <p class="register-text">
 
                 Don't have an account?
 
                 <a href="register.jsp">
-                    Create one
+                    Create Account
                 </a>
 
             </p>
 
         </div>
 
-    </div>
-
+    </main>
 
 </body>
 
 </html>
+```

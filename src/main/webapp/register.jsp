@@ -4,7 +4,6 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -20,24 +19,27 @@
         }
 
         body {
-            background: #f1f5f9;
             min-height: 100vh;
+            background: #f1f5f9;
+            color: #172554;
         }
 
         /* NAVBAR */
 
         .navbar {
+            height: 70px;
             background: #172554;
-            color: white;
-            padding: 18px 7%;
 
             display: flex;
             align-items: center;
             justify-content: space-between;
+
+            padding: 0 7%;
         }
 
         .logo {
-            font-size: 26px;
+            color: white;
+            font-size: 27px;
             font-weight: bold;
         }
 
@@ -48,6 +50,7 @@
         .home-link {
             color: white;
             text-decoration: none;
+            font-size: 15px;
         }
 
         .home-link:hover {
@@ -67,27 +70,29 @@
         }
 
         .register-card {
-            width: 450px;
+            width: 460px;
+            max-width: 100%;
 
             background: white;
 
             padding: 35px;
 
-            border-radius: 12px;
+            border-radius: 14px;
 
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.10);
+            box-shadow:
+                0 8px 30px rgba(0, 0, 0, 0.10);
         }
 
         .register-card h1 {
             text-align: center;
-            color: #172554;
+            font-size: 32px;
             margin-bottom: 8px;
         }
 
         .subtitle {
             text-align: center;
             color: #64748b;
-            margin-bottom: 25px;
+            margin-bottom: 28px;
         }
 
         /* FORM */
@@ -99,18 +104,20 @@
         .form-group label {
             display: block;
 
+            margin-bottom: 7px;
+
             color: #334155;
 
             font-weight: bold;
-
-            margin-bottom: 7px;
+            font-size: 14px;
         }
 
         .form-group input,
         .form-group select {
+
             width: 100%;
 
-            padding: 12px;
+            padding: 12px 13px;
 
             border: 1px solid #cbd5e1;
 
@@ -118,20 +125,28 @@
 
             font-size: 15px;
 
+            background: white;
+
             outline: none;
         }
 
         .form-group input:focus,
         .form-group select:focus {
             border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px rgba(37, 99, 235, 0.10);
         }
 
-        /* BUTTON */
+        /* REGISTER BUTTON */
 
         .register-btn {
+
             width: 100%;
 
             padding: 13px;
+
+            margin-top: 5px;
 
             background: #2563eb;
 
@@ -146,22 +161,22 @@
             font-weight: bold;
 
             cursor: pointer;
-
-            margin-top: 5px;
         }
 
         .register-btn:hover {
             background: #1d4ed8;
         }
 
-        /* LOGIN LINK */
+        /* LOGIN */
 
         .login-text {
             text-align: center;
 
-            margin-top: 20px;
+            margin-top: 22px;
 
             color: #64748b;
+
+            font-size: 14px;
         }
 
         .login-text a {
@@ -176,13 +191,29 @@
             text-decoration: underline;
         }
 
+        /* MOBILE */
+
+        @media (max-width: 500px) {
+
+            .navbar {
+                padding: 0 5%;
+            }
+
+            .register-card {
+                padding: 25px;
+            }
+
+            .register-card h1 {
+                font-size: 27px;
+            }
+        }
+
     </style>
 
 </head>
 
 
 <body>
-
 
     <!-- NAVBAR -->
 
@@ -199,9 +230,9 @@
     </nav>
 
 
-    <!-- REGISTER FORM -->
+    <!-- REGISTER -->
 
-    <div class="register-container">
+    <main class="register-container">
 
         <div class="register-card">
 
@@ -212,9 +243,12 @@
             </p>
 
 
-            <form>
+            <!-- IMPORTANT: THE FORM STARTS HERE -->
 
-                <!-- NAME -->
+            <form action="register" method="post">
+
+
+                <!-- FULL NAME -->
 
                 <div class="form-group">
 
@@ -227,8 +261,7 @@
                         id="name"
                         name="name"
                         placeholder="Enter your full name"
-                        required
-                    >
+                        required>
 
                 </div>
 
@@ -246,8 +279,7 @@
                         id="email"
                         name="email"
                         placeholder="Enter your email"
-                        required
-                    >
+                        required>
 
                 </div>
 
@@ -265,13 +297,14 @@
                         id="phone"
                         name="phone"
                         placeholder="Enter your phone number"
-                        required
-                    >
+                        pattern="[0-9]{10}"
+                        maxlength="10"
+                        required>
 
                 </div>
 
 
-                <!-- ROLE -->
+                <!-- ACCOUNT TYPE -->
 
                 <div class="form-group">
 
@@ -279,7 +312,10 @@
                         Account Type
                     </label>
 
-                    <select id="role" name="role">
+                    <select
+                        id="role"
+                        name="role"
+                        required>
 
                         <option value="customer">
                             Student / Customer
@@ -307,8 +343,8 @@
                         id="password"
                         name="password"
                         placeholder="Create a password"
-                        required
-                    >
+                        minlength="6"
+                        required>
 
                 </div>
 
@@ -326,21 +362,26 @@
                         id="confirmPassword"
                         name="confirmPassword"
                         placeholder="Confirm your password"
-                        required
-                    >
+                        minlength="6"
+                        required>
 
                 </div>
 
 
-                <!-- BUTTON -->
+                <!-- SUBMIT BUTTON -->
 
                 <button
                     type="submit"
                     class="register-btn">
+
                     Create Account
+
                 </button>
 
+
             </form>
+
+            <!-- FORM ENDS HERE -->
 
 
             <p class="login-text">
@@ -355,8 +396,7 @@
 
         </div>
 
-    </div>
-
+    </main>
 
 </body>
 

@@ -96,6 +96,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 20px;
             padding: 20px 0;
             border-bottom: 1px solid #e2e8f0;
         }
@@ -104,6 +105,7 @@
             display: flex;
             align-items: center;
             gap: 20px;
+            flex: 1;
         }
 
         .product-icon {
@@ -125,9 +127,91 @@
             color: #64748b;
         }
 
+        .quantity {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .quantity button {
+            width: 32px;
+            height: 32px;
+            border: 1px solid #cbd5e1;
+            background: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .quantity button:hover {
+            background: #eff6ff;
+        }
+
+        .quantity span {
+            min-width: 25px;
+            text-align: center;
+            font-weight: bold;
+        }
+
         .price {
+            min-width: 90px;
+            text-align: right;
             font-size: 18px;
             font-weight: bold;
+        }
+
+        .remove-btn {
+            border: none;
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .remove-btn:hover {
+            background: #fecaca;
+        }
+
+        .cart-summary {
+            margin-top: 30px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .summary-box {
+            width: 320px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 17px;
+        }
+
+        .total {
+            font-size: 22px;
+            font-weight: bold;
+            border-top: 1px solid #ddd;
+            padding-top: 15px;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            border: none;
+            background: #2563eb;
+            color: white;
+            padding: 14px;
+            margin-top: 20px;
+            border-radius: 7px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .checkout-btn:hover {
+            background: #1d4ed8;
         }
 
         .empty-cart {
@@ -137,6 +221,7 @@
             font-size: 18px;
         }
     </style>
+
 </head>
 
 <body>
@@ -188,7 +273,7 @@
 
                     String name = details[0];
                     String category = details[1];
-                    String price = details[2];
+                    double price = Double.parseDouble(details[2]);
                     String icon = details.length > 3 ? details[3] : "🛒";
         %>
 
@@ -212,14 +297,77 @@
 
                 </div>
 
-                <div class="price">
-                    ₹<%= price %>
+
+                <div class="quantity">
+
+                    <button type="button"
+                            onclick="changeQuantity(this, -1)">
+                        −
+                    </button>
+
+                    <span class="quantity-value">
+                        1
+                    </span>
+
+                    <button type="button"
+                            onclick="changeQuantity(this, 1)">
+                        +
+                    </button>
+
                 </div>
+
+
+                <div class="price"
+                     data-price="<%= price %>">
+
+                    ₹<span class="item-total">
+                        <%= String.format("%.0f", price) %>
+                    </span>
+
+                </div>
+
+
+                <button type="button"
+                        class="remove-btn"
+                        onclick="removeItem(this, '<%= name %>')"></button>
+                    Remove
+                </button>
 
             </div>
 
         <%
                 }
+        %>
+
+
+            <div class="cart-summary">
+
+                <div class="summary-box">
+
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <strong id="subtotal">₹0</strong>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>Delivery</span>
+                        <strong>₹0</strong>
+                    </div>
+
+                    <div class="summary-row total">
+                        <span>Total</span>
+                        <strong id="grand-total">₹0</strong>
+                    </div>
+
+                    <button class="checkout-btn">
+                        Proceed to Checkout
+                    </button>
+
+                </div>
+
+            </div>
+
+        <%
             }
         %>
 
@@ -227,5 +375,91 @@
 
 </div>
 
+
+<script>
+
+    function changeQuantity(button, change) {
+
+        const quantityContainer = button.parentElement;
+
+        const quantityElement =
+            quantityContainer.querySelector(".quantity-value");
+
+        let quantity =
+            parseInt(quantityElement.textContent);
+
+        quantity += change;
+
+        if (quantity < 1) {
+            quantity = 1;
+        }
+
+        quantityElement.textContent = quantity;
+
+        const cartItem =
+            button.closest(".cart-item");
+
+        const priceElement =
+            cartItem.querySelector(".price");
+
+        const unitPrice =
+            parseFloat(priceElement.dataset.price);
+
+        const itemTotal =
+            cartItem.querySelector(".item-total");
+
+        itemTotal.textContent =
+            Math.round(unitPrice * quantity);
+
+        calculateTotal();
+    }
+
+
+    function removeItem(button, productName) {
+
+    window.location.href =
+        "remove-cart?name=" +
+        encodeURIComponent(productName);
+}
+
+
+    function calculateTotal() {
+
+        const cartItems =
+            document.querySelectorAll(".cart-item");
+
+        let subtotal = 0;
+
+        cartItems.forEach(function(item) {
+
+            const priceElement =
+                item.querySelector(".price");
+
+            const unitPrice =
+                parseFloat(priceElement.dataset.price);
+
+            const quantityElement =
+                item.querySelector(".quantity-value");
+
+            const quantity =
+                parseInt(quantityElement.textContent);
+
+            subtotal += unitPrice * quantity;
+
+        });
+
+        document.getElementById("subtotal").textContent =
+            "₹" + Math.round(subtotal);
+
+        document.getElementById("grand-total").textContent =
+            "₹" + Math.round(subtotal);
+    }
+
+
+    calculateTotal();
+
+</script>
+
 </body>
+
 </html>

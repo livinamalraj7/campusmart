@@ -254,7 +254,7 @@
             <li><a href="#">Categories</a></li>
             <a href="cart.jsp">Cart 🛒</a></li>
             <li>
-                <a href="login.jsp" class="login-btn">Login</a>
+                <a href="logout" class="login-btn">Logout</a>
             </li>
         </ul>
 

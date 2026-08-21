@@ -328,10 +328,10 @@
 
 
                 <button type="button"
-                        class="remove-btn"
-                        onclick="removeItem(this, '<%= name %>')"></button>
-                    Remove
-                </button>
+        class="remove-btn"
+        onclick="removeItem(this, '<%= name %>')">
+    Remove
+</button>
 
             </div>
 
@@ -359,9 +359,13 @@
                         <strong id="grand-total">₹0</strong>
                     </div>
 
-                    <button class="checkout-btn">
-                        Proceed to Checkout
-                    </button>
+                    <form action="order" method="post">
+
+    <button type="submit" class="checkout-btn">
+        Proceed to Checkout
+    </button>
+
+</form>
 
                 </div>
 

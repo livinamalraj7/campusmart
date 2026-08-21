@@ -1,552 +1,347 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.net.URLEncoder" %>
+<%@ page import="com.campusmart.model.Product" %>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-    <title>Products | CampusMart</title>
+<title>Products | CampusMart</title>
 
-    <style>
+<style>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
 
-        body {
-            background: #f1f5f9;
-            color: #172554;
-        }
+body {
+    background: #f1f5f9;
+    color: #172554;
+}
 
-        /* NAVBAR */
+/* NAVBAR */
 
-        .navbar {
-            background: #172554;
-            color: white;
+.navbar {
+    background: #172554;
+    color: white;
+    padding: 18px 7%;
 
-            padding: 18px 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
+.logo {
+    font-size: 26px;
+    font-weight: bold;
+}
 
-        .logo {
-            font-size: 26px;
-            font-weight: bold;
-        }
+.logo span {
+    color: #60a5fa;
+}
 
-        .logo span {
-            color: #60a5fa;
-        }
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
 
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 28px;
-        }
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+}
 
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-size: 15px;
-        }
+.nav-links a:hover {
+    color: #93c5fd;
+}
 
-        .nav-links a:hover {
-            color: #93c5fd;
-        }
+/* PAGE HEADER */
 
-        .cart-btn {
-            background: #2563eb;
-            padding: 9px 16px;
-            border-radius: 6px;
-        }
+.page-header {
+    text-align: center;
+    padding: 50px 20px 30px;
+}
 
-        /* PAGE HEADER */
+.page-header h1 {
+    font-size: 38px;
+    margin-bottom: 10px;
+}
 
-        .page-header {
-            text-align: center;
+.page-header p {
+    color: #64748b;
+    font-size: 17px;
+}
 
-            padding: 50px 20px 30px;
-        }
+/* PRODUCTS */
 
-        .page-header h1 {
-            font-size: 38px;
-            margin-bottom: 10px;
-        }
+.products-container {
+    width: 86%;
+    margin: auto;
 
-        .page-header p {
-            color: #64748b;
-            font-size: 17px;
-        }
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 
-        /* FILTER */
+    gap: 25px;
+    padding-bottom: 50px;
+}
 
-        .filter-section {
-            width: 86%;
-            margin: 0 auto 30px;
+.product-card {
+    background: white;
 
-            display: flex;
-            justify-content: center;
-            gap: 12px;
+    border-radius: 12px;
+    padding: 20px;
 
-            flex-wrap: wrap;
-        }
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 
-        .filter-btn {
-            padding: 9px 18px;
+    transition: transform 0.2s;
+}
 
-            border: 1px solid #cbd5e1;
+.product-card:hover {
+    transform: translateY(-5px);
+}
 
-            background: white;
+.product-image {
+    height: 150px;
 
-            border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-            cursor: pointer;
+    font-size: 70px;
 
-            color: #334155;
-        }
+    background: #eff6ff;
+    border-radius: 10px;
 
-        .filter-btn:hover {
-            background: #2563eb;
-            color: white;
-        }
+    margin-bottom: 18px;
+}
 
-        /* PRODUCTS */
+.category {
+    color: #2563eb;
 
-        .products-container {
-            width: 86%;
-            margin: auto;
+    font-size: 13px;
+    font-weight: bold;
 
-            display: grid;
+    margin-bottom: 7px;
 
-            grid-template-columns:
-                repeat(auto-fit, minmax(240px, 1fr));
+    text-transform: uppercase;
+}
 
-            gap: 25px;
+.product-card h2 {
+    font-size: 20px;
+    margin-bottom: 8px;
+}
 
-            padding-bottom: 50px;
-        }
+.description {
+    color: #64748b;
 
-        .product-card {
-            background: white;
+    font-size: 14px;
+    line-height: 1.5;
 
-            border-radius: 12px;
+    min-height: 42px;
+}
 
-            padding: 20px;
+.product-bottom {
+    display: flex;
 
-            box-shadow:
-                0 4px 15px rgba(0, 0, 0, 0.08);
+    align-items: center;
+    justify-content: space-between;
 
-            transition: transform 0.2s;
-        }
+    margin-top: 18px;
+}
 
-        .product-card:hover {
-            transform: translateY(-5px);
-        }
+.price {
+    font-size: 20px;
 
-        .product-image {
-            height: 150px;
+    font-weight: bold;
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    color: #172554;
+}
 
-            font-size: 70px;
+.add-btn {
+    background: #2563eb;
 
-            background: #eff6ff;
+    color: white;
 
-            border-radius: 10px;
+    border: none;
 
-            margin-bottom: 18px;
-        }
+    padding: 9px 14px;
 
-        .category {
-            color: #2563eb;
+    border-radius: 6px;
 
-            font-size: 13px;
+    cursor: pointer;
 
-            font-weight: bold;
+    font-weight: bold;
 
-            margin-bottom: 7px;
-        }
+    text-decoration: none;
 
-        .product-card h2 {
-            font-size: 20px;
+    display: inline-block;
+}
 
-            margin-bottom: 8px;
-        }
+.add-btn:hover {
+    background: #1d4ed8;
+}
 
-        .description {
-            color: #64748b;
+.empty-message {
+    text-align: center;
 
-            font-size: 14px;
+    grid-column: 1 / -1;
 
-            line-height: 1.5;
+    padding: 50px;
 
-            min-height: 42px;
-        }
+    color: #64748b;
+}
 
-        .product-bottom {
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            margin-top: 18px;
-        }
-
-        .price {
-            font-size: 20px;
-
-            font-weight: bold;
-
-            color: #172554;
-        }
-
-        .add-btn {
-            background: #2563eb;
-
-            color: white;
-
-            border: none;
-
-            padding: 9px 14px;
-
-            border-radius: 6px;
-
-            cursor: pointer;
-
-            font-weight: bold;
-
-            text-decoration: none;
-
-            display: inline-block;
-        }
-
-        .add-btn:hover {
-            background: #1d4ed8;
-        }
-
-    </style>
+</style>
 
 </head>
 
-
 <body>
 
+<!-- NAVBAR -->
 
-    <!-- NAVBAR -->
+<nav class="navbar">
 
-    <nav class="navbar">
+    <div class="logo">
+        🎓 Campus<span>Mart</span>
+    </div>
 
-        <div class="logo">
-            🎓 Campus<span>Mart</span>
+    <div class="nav-links">
+
+        <a href="index.jsp">
+            Home
+        </a>
+
+        <a href="products">
+            Products
+        </a>
+
+        <a href="cart">
+            🛒 Cart
+        </a>
+
+        <a href="login.jsp">
+            Login
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- PAGE HEADER -->
+
+<section class="page-header">
+
+    <h1>CampusMart Products</h1>
+
+    <p>
+        Find everything you need for your college life.
+    </p>
+
+</section>
+
+
+<!-- PRODUCTS -->
+
+<div class="products-container">
+
+<%
+    List<Product> products =
+        (List<Product>) request.getAttribute("products");
+
+    if (products != null && !products.isEmpty()) {
+
+        for (Product product : products) {
+
+            String name = URLEncoder.encode(
+                product.getName(), "UTF-8"
+            );
+
+            String category = URLEncoder.encode(
+                product.getCategory(), "UTF-8"
+            );
+
+            String image = URLEncoder.encode(
+                product.getImage(), "UTF-8"
+            );
+
+            String price = String.valueOf(
+                product.getPrice()
+            );
+%>
+
+    <!-- PRODUCT CARD -->
+
+    <div class="product-card">
+
+        <div class="product-image">
+            <%= product.getImage() %>
         </div>
 
-
-        <div class="nav-links">
-
-            <a href="index.jsp">
-                Home
-            </a>
-
-            <a href="products.jsp">
-                Products
-            </a>
-
-            <a href="#">
-                Categories
-            </a>
-
-            <a href="cart">
-                🛒 Cart
-            </a>
-
-            <a href="login.jsp">
-                Login
-            </a>
-
+        <div class="category">
+            <%= product.getCategory() %>
         </div>
 
-    </nav>
+        <h2>
+            <%= product.getName() %>
+        </h2>
 
-
-    <!-- PAGE HEADER -->
-
-    <section class="page-header">
-
-        <h1>CampusMart Products</h1>
-
-        <p>
-            Find everything you need for your college life.
+        <p class="description">
+            <%= product.getDescription() %>
         </p>
 
-    </section>
+        <div class="product-bottom">
 
+            <span class="price">
+                ₹<%= String.format("%.0f", product.getPrice()) %>
+            </span>
 
-    <!-- FILTERS -->
+            <!-- ADD TO CART -->
 
-    <div class="filter-section">
+            <a
+                href="cart?name=<%= name %>&category=<%= category %>&price=<%= price %>&icon=<%= image %>"
+                class="add-btn">
 
-        <button class="filter-btn">
-            All
-        </button>
+                Add to Cart
 
-        <button class="filter-btn">
-            📚 Books
-        </button>
+            </a>
 
-        <button class="filter-btn">
-            📝 Study Materials
-        </button>
-
-        <button class="filter-btn">
-            ✏️ Stationery
-        </button>
-
-        <button class="filter-btn">
-            🧮 Calculators
-        </button>
-
-        <button class="filter-btn">
-            🎒 Accessories
-        </button>
-
-        <button class="filter-btn">
-            🔬 Project Materials
-        </button>
+        </div>
 
     </div>
 
+<%
+        }
 
-    <!-- PRODUCTS -->
+    } else {
+%>
 
-    <div class="products-container">
+    <div class="empty-message">
 
+        <h2>No products available</h2>
 
-        <!-- PRODUCT 1 -->
-
-        <div class="product-card">
-
-            <div class="product-image">
-                📚
-            </div>
-
-            <div class="category">
-                BOOKS
-            </div>
-
-            <h2>
-                Engineering Mathematics
-            </h2>
-
-            <p class="description">
-                Useful reference book for engineering students.
-            </p>
-
-            <div class="product-bottom">
-
-                <span class="price">
-                    ₹350
-                </span>
-
-                <a href="cart?name=Engineering%20Mathematics&category=Books&price=350&icon=%F0%9F%93%9A"
-                   class="add-btn">
-                    Add to Cart
-                </a>
-
-            </div>
-
-        </div>
-
-
-        <!-- PRODUCT 2 -->
-
-        <div class="product-card">
-
-            <div class="product-image">
-                📝
-            </div>
-
-            <div class="category">
-                STUDY MATERIALS
-            </div>
-
-            <h2>
-                C Programming Notes
-            </h2>
-
-            <p class="description">
-                Semester notes and important programming concepts.
-            </p>
-
-            <div class="product-bottom">
-
-                <span class="price">
-                    ₹100
-                </span>
-
-                <button class="add-btn">
-                    Add to Cart
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <!-- PRODUCT 3 -->
-
-        <div class="product-card">
-
-            <div class="product-image">
-                ✏️
-            </div>
-
-            <div class="category">
-                STATIONERY
-            </div>
-
-            <h2>
-                College Stationery Kit
-            </h2>
-
-            <p class="description">
-                Pens, pencils, notebook and other essentials.
-            </p>
-
-            <div class="product-bottom">
-
-                <span class="price">
-                    ₹150
-                </span>
-
-                <button class="add-btn">
-                    Add to Cart
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <!-- PRODUCT 4 -->
-
-        <div class="product-card">
-
-            <div class="product-image">
-                🧮
-            </div>
-
-            <div class="category">
-                CALCULATORS
-            </div>
-
-            <h2>
-                Scientific Calculator
-            </h2>
-
-            <p class="description">
-                Scientific calculator suitable for engineering students.
-            </p>
-
-            <div class="product-bottom">
-
-                <span class="price">
-                    ₹650
-                </span>
-
-                <button class="add-btn">
-                    Add to Cart
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <!-- PRODUCT 5 -->
-
-        <div class="product-card">
-
-            <div class="product-image">
-                🎒
-            </div>
-
-            <div class="category">
-                ACCESSORIES
-            </div>
-
-            <h2>
-                College Backpack
-            </h2>
-
-            <p class="description">
-                Spacious backpack for books, laptop and college items.
-            </p>
-
-            <div class="product-bottom">
-
-                <span class="price">
-                    ₹900
-                </span>
-
-                <button class="add-btn">
-                    Add to Cart
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <!-- PRODUCT 6 -->
-
-        <div class="product-card">
-
-            <div class="product-image">
-                🔬
-            </div>
-
-            <div class="category">
-                PROJECT MATERIALS
-            </div>
-
-            <h2>
-                Mini Project Kit
-            </h2>
-
-            <p class="description">
-                Basic components and materials for student projects.
-            </p>
-
-            <div class="product-bottom">
-
-                <span class="price">
-                    ₹450
-                </span>
-
-                <button class="add-btn">
-                    Add to Cart
-                </button>
-
-            </div>
-
-        </div>
-
+        <p>
+            Please check back later.
+        </p>
 
     </div>
 
+<%
+    }
+%>
+
+</div>
 
 </body>
 

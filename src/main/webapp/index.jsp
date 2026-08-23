@@ -148,6 +148,10 @@
             border-radius: 10px;
             box-shadow: 0 3px 12px rgba(0,0,0,0.08);
             transition: 0.2s;
+
+            text-decoration: none;
+            color: inherit;
+            display: block;
         }
 
         .category:hover {
@@ -240,257 +244,298 @@
 
 <body>
 
-    <!-- NAVBAR -->
+<!-- NAVBAR -->
 
-    <nav class="navbar">
+<nav class="navbar">
 
-        <div class="logo">
-            🎓 Campus<span>Mart</span>
-        </div>
+    <div class="logo">
+        🎓 Campus<span>Mart</span>
+    </div>
 
-        <ul class="nav-links">
-            <li><a href="index.jsp">Home</a></li>
-            <a href="products.jsp">Products</a>
-            <li><a href="#">Categories</a></li>
-            <a href="cart.jsp">Cart 🛒</a></li>
-            <li>
-                <a href="logout" class="login-btn">Logout</a>
-            </li>
-        </ul>
+    <ul class="nav-links">
 
-    </nav>
-
-
-    <!-- HERO -->
-
-    <section class="hero">
-
-        <div class="hero-text">
-
-            <h1>
-                Everything You Need,
-                <span>Right on Campus.</span>
-            </h1>
-
-            <p>
-                CampusMart is a student-focused marketplace where
-                college students can buy and sell books, notes,
-                stationery, calculators, project materials and
-                college accessories.
-            </p>
-
-            <a href="#" class="shop-btn">
-                Explore CampusMart →
+        <li>
+            <a href="${pageContext.request.contextPath}/index.jsp">
+                Home
             </a>
+        </li>
 
-        </div>
+        <li>
+            <a href="/campusmart/products">
+    Products
+</a>
+        </li>
 
-        <div class="hero-icon">
-            🎓
-        </div>
+        <li>
+            <a href="${pageContext.request.contextPath}/products">
+                Categories
+            </a>
+        </li>
 
-    </section>
+        <li>
+            <a href="${pageContext.request.contextPath}/cart">
+                Cart 🛒
+            </a>
+        </li>
+
+        <li>
+            <a href="${pageContext.request.contextPath}/my-orders">
+                My Orders
+            </a>
+        </li>
+
+        <li>
+            <a href="${pageContext.request.contextPath}/logout" class="login-btn">
+                Logout
+            </a>
+        </li>
+
+    </ul>
+
+</nav>
 
 
-    <!-- CATEGORIES -->
+<!-- HERO -->
 
-    <section class="section">
+<section class="hero">
 
-        <div class="section-title">
+    <div class="hero-text">
 
-            <h2>Shop by Category</h2>
+        <h1>
+            Everything You Need,
+            <span>Right on Campus.</span>
+        </h1>
+
+        <p>
+            CampusMart is a student-focused marketplace where
+            college students can buy and sell books, notes,
+            stationery, calculators, project materials and
+            college accessories.
+        </p>
+
+        <!-- FIXED EXPLORE BUTTON -->
+
+        <a href="/campusmart/products"
+   class="shop-btn">
+    Explore CampusMart →
+</a>
+
+    </div>
+
+    <div class="hero-icon">
+        🎓
+    </div>
+
+</section>
+
+
+<!-- CATEGORIES -->
+
+<section class="section">
+
+    <div class="section-title">
+
+        <h2>Shop by Category</h2>
+
+        <p>
+            Find everything you need for your campus life
+        </p>
+
+    </div>
+
+
+    <div class="categories">
+
+        <a href="${pageContext.request.contextPath}/products?category=Books"
+           class="category">
+
+            <div class="category-icon">📚</div>
+
+            <h3>Books</h3>
 
             <p>
-                Find everything you need for your campus life
+                Textbooks & reference books
+            </p>
+
+        </a>
+
+
+        <a href="${pageContext.request.contextPath}/products?category=Study%20Materials"
+           class="category">
+
+            <div class="category-icon">📝</div>
+
+            <h3>Study Materials</h3>
+
+            <p>
+                Notes and study resources
+            </p>
+
+        </a>
+
+
+        <a href="${pageContext.request.contextPath}/products?category=Stationery"
+           class="category">
+
+            <div class="category-icon">✏️</div>
+
+            <h3>Stationery</h3>
+
+            <p>
+                Pens, notebooks and more
+            </p>
+
+        </a>
+
+
+        <a href="${pageContext.request.contextPath}/products?category=Electronics"
+           class="category">
+
+            <div class="category-icon">🧮</div>
+
+            <h3>Calculators</h3>
+
+            <p>
+                Scientific and academic calculators
+            </p>
+
+        </a>
+
+
+        <a href="${pageContext.request.contextPath}/products?category=Accessories"
+           class="category">
+
+            <div class="category-icon">🎒</div>
+
+            <h3>Accessories</h3>
+
+            <p>
+                Bags and college essentials
+            </p>
+
+        </a>
+
+
+        <a href="${pageContext.request.contextPath}/products?category=Project%20Materials"
+           class="category">
+
+            <div class="category-icon">🔬</div>
+
+            <h3>Project Materials</h3>
+
+            <p>
+                Materials for academic projects
+            </p>
+
+        </a>
+
+
+        <a href="${pageContext.request.contextPath}/products?category=Merchandise"
+           class="category">
+
+            <div class="category-icon">👕</div>
+
+            <h3>Merchandise</h3>
+
+            <p>
+                College merchandise
+            </p>
+
+        </a>
+
+
+        <a href="${pageContext.request.contextPath}/products"
+           class="category">
+
+            <div class="category-icon">🛍️</div>
+
+            <h3>More</h3>
+
+            <p>
+                Explore more campus products
+            </p>
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- FEATURES -->
+
+<section class="section">
+
+    <div class="section-title">
+
+        <h2>Why CampusMart?</h2>
+
+    </div>
+
+
+    <div class="features">
+
+        <div class="feature">
+
+            <div class="feature-icon">🎓</div>
+
+            <h3>Made for Students</h3>
+
+            <p>
+                A marketplace designed specifically
+                for college students.
             </p>
 
         </div>
 
 
-        <div class="categories">
+        <div class="feature">
 
-            <div class="category">
+            <div class="feature-icon">🤝</div>
 
-                <div class="category-icon">📚</div>
+            <h3>Student Sellers</h3>
 
-                <h3>Books</h3>
-
-                <p>
-                    Textbooks & reference books
-                </p>
-
-            </div>
-
-
-            <div class="category">
-
-                <div class="category-icon">📝</div>
-
-                <h3>Study Materials</h3>
-
-                <p>
-                    Notes and study resources
-                </p>
-
-            </div>
-
-
-            <div class="category">
-
-                <div class="category-icon">✏️</div>
-
-                <h3>Stationery</h3>
-
-                <p>
-                    Pens, notebooks and more
-                </p>
-
-            </div>
-
-
-            <div class="category">
-
-                <div class="category-icon">🧮</div>
-
-                <h3>Calculators</h3>
-
-                <p>
-                    Scientific and academic calculators
-                </p>
-
-            </div>
-
-
-            <div class="category">
-
-                <div class="category-icon">🎒</div>
-
-                <h3>Accessories</h3>
-
-                <p>
-                    Bags and college essentials
-                </p>
-
-            </div>
-
-
-            <div class="category">
-
-                <div class="category-icon">🔬</div>
-
-                <h3>Project Materials</h3>
-
-                <p>
-                    Materials for academic projects
-                </p>
-
-            </div>
-
-
-            <div class="category">
-
-                <div class="category-icon">👕</div>
-
-                <h3>Merchandise</h3>
-
-                <p>
-                    College merchandise
-                </p>
-
-            </div>
-
-
-            <div class="category">
-
-                <div class="category-icon">🛍️</div>
-
-                <h3>More</h3>
-
-                <p>
-                    Explore more campus products
-                </p>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- FEATURES -->
-
-    <section class="section">
-
-        <div class="section-title">
-
-            <h2>Why CampusMart?</h2>
+            <p>
+                Students can sell useful products
+                directly to other students.
+            </p>
 
         </div>
 
 
-        <div class="features">
+        <div class="feature">
 
-            <div class="feature">
+            <div class="feature-icon">🛒</div>
 
-                <div class="feature-icon">🎓</div>
+            <h3>Easy Shopping</h3>
 
-                <h3>Made for Students</h3>
-
-                <p>
-                    A marketplace designed specifically
-                    for college students.
-                </p>
-
-            </div>
-
-
-            <div class="feature">
-
-                <div class="feature-icon">🤝</div>
-
-                <h3>Student Sellers</h3>
-
-                <p>
-                    Students can sell useful products
-                    directly to other students.
-                </p>
-
-            </div>
-
-
-            <div class="feature">
-
-                <div class="feature-icon">🛒</div>
-
-                <h3>Easy Shopping</h3>
-
-                <p>
-                    Browse products, add them to your cart
-                    and place orders easily.
-                </p>
-
-            </div>
+            <p>
+                Browse products, add them to your cart
+                and place orders easily.
+            </p>
 
         </div>
 
-    </section>
+    </div>
+
+</section>
 
 
-    <!-- FOOTER -->
+<!-- FOOTER -->
 
-    <footer>
+<footer>
 
-        <h3>🎓 CampusMart</h3>
+    <h3>🎓 CampusMart</h3>
 
-        <p>
-            Your Campus. Your Marketplace.
-        </p>
+    <p>
+        Your Campus. Your Marketplace.
+    </p>
 
-        <p>
-            © 2026 CampusMart
-        </p>
+    <p>
+        © 2026 CampusMart
+    </p>
 
-    </footer>
+</footer>
 
 </body>
 

@@ -2,15 +2,20 @@
 <%@ page import="java.util.List" %>
 
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Cart | CampusMart</title>
 
     <style>
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -220,6 +225,7 @@
             color: #64748b;
             font-size: 18px;
         }
+
     </style>
 
 </head>
@@ -233,12 +239,28 @@
     </div>
 
     <div class="nav-links">
-        <a href="index.jsp">Home</a>
-        <a href="products.jsp">Products</a>
-        <a href="products.jsp">Categories</a>
-        <a href="cart">Cart 🛒</a>
-        <a href="login.jsp" class="login-btn">Login</a>
-    </div>
+
+    <a href="index.jsp">
+        Home
+    </a>
+
+    <a href="products">
+        Products
+    </a>
+
+    <a href="cart">
+        🛒 Cart
+    </a>
+
+    <a href="my-orders">
+        📦 My Orders
+    </a>
+
+    <a href="login.jsp" class="login-btn">
+        Login
+    </a>
+
+</div>
 
 </nav>
 
@@ -246,8 +268,11 @@
 <div class="cart-container">
 
     <div class="cart-title">
+
         <h1>🛒 Your Cart</h1>
+
         <p>Review your selected campus essentials</p>
+
     </div>
 
 
@@ -274,7 +299,9 @@
                     String name = details[0];
                     String category = details[1];
                     double price = Double.parseDouble(details[2]);
-                    String icon = details.length > 3 ? details[3] : "🛒";
+
+                    String icon =
+                            details.length > 3 ? details[3] : "🛒";
         %>
 
             <div class="cart-item">
@@ -286,6 +313,7 @@
                     </div>
 
                     <div>
+
                         <h3>
                             <%= name %>
                         </h3>
@@ -293,6 +321,7 @@
                         <p>
                             <%= category %>
                         </p>
+
                     </div>
 
                 </div>
@@ -328,10 +357,10 @@
 
 
                 <button type="button"
-        class="remove-btn"
-        onclick="removeItem(this, '<%= name %>')">
-    Remove
-</button>
+                        class="remove-btn"
+                        onclick="removeItem(this, '<%= name %>')">
+                    Remove
+                </button>
 
             </div>
 
@@ -345,27 +374,50 @@
                 <div class="summary-box">
 
                     <div class="summary-row">
+
                         <span>Subtotal</span>
-                        <strong id="subtotal">₹0</strong>
+
+                        <strong id="subtotal">
+                            ₹0
+                        </strong>
+
                     </div>
+
 
                     <div class="summary-row">
+
                         <span>Delivery</span>
-                        <strong>₹0</strong>
+
+                        <strong>
+                            ₹0
+                        </strong>
+
                     </div>
 
+
                     <div class="summary-row total">
+
                         <span>Total</span>
-                        <strong id="grand-total">₹0</strong>
+
+                        <strong id="grand-total">
+                            ₹0
+                        </strong>
+
                     </div>
+
+
+                    <!-- CHECKOUT CONNECTED TO ORDER SERVLET -->
 
                     <form action="order" method="post">
 
-    <button type="submit" class="checkout-btn">
-        Proceed to Checkout
-    </button>
+                        <button type="submit"
+                                class="checkout-btn">
 
-</form>
+                            Proceed to Checkout
+
+                        </button>
+
+                    </form>
 
                 </div>
 
@@ -384,7 +436,8 @@
 
     function changeQuantity(button, change) {
 
-        const quantityContainer = button.parentElement;
+        const quantityContainer =
+            button.parentElement;
 
         const quantityElement =
             quantityContainer.querySelector(".quantity-value");
@@ -421,10 +474,10 @@
 
     function removeItem(button, productName) {
 
-    window.location.href =
-        "remove-cart?name=" +
-        encodeURIComponent(productName);
-}
+        window.location.href =
+            "remove-cart?name=" +
+            encodeURIComponent(productName);
+    }
 
 
     function calculateTotal() {
@@ -452,8 +505,10 @@
 
         });
 
+
         document.getElementById("subtotal").textContent =
             "₹" + Math.round(subtotal);
+
 
         document.getElementById("grand-total").textContent =
             "₹" + Math.round(subtotal);

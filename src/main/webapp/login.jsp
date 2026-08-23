@@ -1,4 +1,3 @@
-```jsp
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <!DOCTYPE html>
@@ -7,7 +6,9 @@
 <head>
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Login | CampusMart</title>
 
@@ -22,82 +23,38 @@
 
         body {
             min-height: 100vh;
-            background: #f1f5f9;
+            background: linear-gradient(135deg, #dbeafe, #eff6ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: #172554;
         }
 
-        /* NAVBAR */
-
-        .navbar {
-            height: 70px;
-            background: #172554;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            padding: 0 7%;
+        .login-container {
+            width: 90%;
+            max-width: 420px;
+            background: white;
+            padding: 40px;
+            border-radius: 14px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
         }
 
         .logo {
-            color: white;
-            font-size: 27px;
+            text-align: center;
+            font-size: 30px;
             font-weight: bold;
+            margin-bottom: 8px;
         }
 
         .logo span {
-            color: #60a5fa;
-        }
-
-        .home-link {
-            color: white;
-            text-decoration: none;
-            font-size: 15px;
-        }
-
-        .home-link:hover {
-            color: #93c5fd;
-        }
-
-        /* LOGIN AREA */
-
-        .login-container {
-            min-height: calc(100vh - 70px);
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            padding: 40px 20px;
-        }
-
-        .login-card {
-            width: 430px;
-            max-width: 100%;
-
-            background: white;
-
-            padding: 38px;
-
-            border-radius: 14px;
-
-            box-shadow:
-                0 8px 30px rgba(0, 0, 0, 0.10);
-        }
-
-        .login-card h1 {
-            text-align: center;
-            font-size: 32px;
-            margin-bottom: 8px;
+            color: #2563eb;
         }
 
         .subtitle {
             text-align: center;
             color: #64748b;
-            margin-bottom: 28px;
+            margin-bottom: 30px;
         }
-
-        /* FORM */
 
         .form-group {
             margin-bottom: 20px;
@@ -105,57 +62,33 @@
 
         .form-group label {
             display: block;
-
             margin-bottom: 7px;
-
-            color: #334155;
-
             font-weight: bold;
-            font-size: 14px;
+            color: #172554;
         }
 
         .form-group input {
             width: 100%;
-
-            padding: 13px;
-
+            padding: 12px;
             border: 1px solid #cbd5e1;
-
             border-radius: 7px;
-
             font-size: 15px;
-
             outline: none;
         }
 
         .form-group input:focus {
             border-color: #2563eb;
-
-            box-shadow:
-                0 0 0 3px rgba(37, 99, 235, 0.10);
         }
-
-        /* LOGIN BUTTON */
 
         .login-btn {
             width: 100%;
-
-            padding: 13px;
-
-            margin-top: 5px;
-
-            background: #2563eb;
-
-            color: white;
-
             border: none;
-
+            background: #2563eb;
+            color: white;
+            padding: 13px;
             border-radius: 7px;
-
             font-size: 16px;
-
             font-weight: bold;
-
             cursor: pointer;
         }
 
@@ -163,154 +96,111 @@
             background: #1d4ed8;
         }
 
-        /* REGISTER LINK */
-
-        .register-text {
+        .register-link {
             text-align: center;
-
             margin-top: 22px;
-
             color: #64748b;
-
-            font-size: 14px;
         }
 
-        .register-text a {
+        .register-link a {
             color: #2563eb;
-
             text-decoration: none;
-
             font-weight: bold;
         }
 
-        .register-text a:hover {
+        .register-link a:hover {
             text-decoration: underline;
         }
 
-        /* MOBILE */
+        .home-link {
+            text-align: center;
+            margin-top: 15px;
+        }
 
-        @media (max-width: 500px) {
+        .home-link a {
+            color: #475569;
+            text-decoration: none;
+            font-size: 14px;
+        }
 
-            .navbar {
-                padding: 0 5%;
-            }
-
-            .login-card {
-                padding: 25px;
-            }
-
-            .login-card h1 {
-                font-size: 27px;
-            }
+        .home-link a:hover {
+            color: #2563eb;
         }
 
     </style>
 
 </head>
 
-
 <body>
 
-    <!-- NAVBAR -->
-
-    <nav class="navbar">
+    <div class="login-container">
 
         <div class="logo">
             🎓 Campus<span>Mart</span>
         </div>
 
-        <a href="index.jsp" class="home-link">
-            ← Back to Home
-        </a>
+        <p class="subtitle">
+            Login to your CampusMart account
+        </p>
 
-    </nav>
+        <form action="login" method="post">
 
+            <div class="form-group">
 
-    <!-- LOGIN -->
+                <label for="email">
+                    Email
+                </label>
 
-    <main class="login-container">
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    required>
 
-        <div class="login-card">
+            </div>
 
-            <h1>Welcome Back</h1>
+            <div class="form-group">
 
-            <p class="subtitle">
-                Login to your CampusMart account
-            </p>
+                <label for="password">
+                    Password
+                </label>
 
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    required>
 
-            <!-- LOGIN FORM -->
+            </div>
 
-            <form action="login" method="post">
+            <button type="submit" class="login-btn">
+                Login
+            </button>
 
+        </form>
 
-                <!-- EMAIL -->
+        <div class="register-link">
 
-                <div class="form-group">
+            Don't have an account?
 
-                    <label for="email">
-                        Email
-                    </label>
-
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="Enter your email"
-                        required>
-
-                </div>
-
-
-                <!-- PASSWORD -->
-
-                <div class="form-group">
-
-                    <label for="password">
-                        Password
-                    </label>
-
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        placeholder="Enter your password"
-                        required>
-
-                </div>
-
-
-                <!-- LOGIN BUTTON -->
-
-                <button
-                    type="submit"
-                    class="login-btn">
-
-                    Login
-
-                </button>
-
-
-            </form>
-
-
-            <!-- REGISTER LINK -->
-
-            <p class="register-text">
-
-                Don't have an account?
-
-                <a href="register.jsp">
-                    Create Account
-                </a>
-
-            </p>
+            <a href="register.jsp">
+                Register
+            </a>
 
         </div>
 
-    </main>
+        <div class="home-link">
+
+            <a href="index.jsp">
+                ← Back to Home
+            </a>
+
+        </div>
+
+    </div>
 
 </body>
 
 </html>
-```

@@ -218,23 +218,27 @@ body {
 
     <div class="nav-links">
 
-        <a href="index.jsp">
-            Home
-        </a>
+    <a href="index.jsp">
+        Home
+    </a>
 
-        <a href="products">
-            Products
-        </a>
+    <a href="products">
+        Products
+    </a>
 
-        <a href="cart">
-            🛒 Cart
-        </a>
+    <a href="cart">
+        🛒 Cart
+    </a>
 
-        <a href="login.jsp">
-            Login
-        </a>
+    <a href="my-orders">
+        📦 My Orders
+    </a>
 
-    </div>
+    <a href="login.jsp">
+        Login
+    </a>
+
+</div>
 
 </nav>
 

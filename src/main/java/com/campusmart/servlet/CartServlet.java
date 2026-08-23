@@ -40,6 +40,6 @@ public class CartServlet extends HttpServlet {
 
         session.setAttribute("cart", cart);
 
-        response.sendRedirect("cart.jsp");
+        response.sendRedirect(request.getContextPath() + "/cart.jsp");
     }
 }

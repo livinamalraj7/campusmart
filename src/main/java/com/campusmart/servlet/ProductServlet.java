@@ -25,26 +25,62 @@ public class ProductServlet extends HttpServlet {
 
         List<Product> productList = new ArrayList<>();
 
+        String category = request.getParameter("category");
+        System.out.println("CATEGORY RECEIVED = " + category);
+
         try {
+
             Connection connection = DBConnection.getConnection();
 
-            String sql = "SELECT * FROM products";
+            String sql;
+
+            if (category == null || category.isEmpty()) {
+
+                sql = "SELECT * FROM products";
+
+            } else {
+
+                sql = "SELECT * FROM products WHERE category = ?";
+            }
 
             PreparedStatement statement =
                     connection.prepareStatement(sql);
 
-            ResultSet resultSet = statement.executeQuery();
+            if (category != null && !category.isEmpty()) {
+
+                statement.setString(1, category);
+            }
+
+            ResultSet resultSet =
+                    statement.executeQuery();
 
             while (resultSet.next()) {
 
                 Product product = new Product();
 
-                product.setId(resultSet.getInt("id"));
-                product.setName(resultSet.getString("name"));
-                product.setCategory(resultSet.getString("category"));
-                product.setPrice(resultSet.getDouble("price"));
-                product.setDescription(resultSet.getString("description"));
-                product.setImage(resultSet.getString("image"));
+                product.setId(
+                        resultSet.getInt("id")
+                );
+
+                product.setName(
+                        resultSet.getString("name")
+                );
+
+                product.setCategory(
+                        resultSet.getString("category")
+                );
+
+                product.setPrice(
+                        resultSet.getDouble("price")
+                );
+
+                product.setDescription(
+                        resultSet.getString("description")
+                );
+
+                product.setImage(
+                        resultSet.getString("image")
+                );
 
                 productList.add(product);
             }
@@ -54,12 +90,13 @@ public class ProductServlet extends HttpServlet {
             connection.close();
 
         } catch (Exception e) {
+
             e.printStackTrace();
         }
 
         request.setAttribute("products", productList);
 
-        request.getRequestDispatcher("products.jsp")
-                .forward(request, response);
+        request.getRequestDispatcher("/products.jsp")
+               .forward(request, response);
     }
 }

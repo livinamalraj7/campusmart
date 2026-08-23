@@ -346,22 +346,21 @@
 
     <div class="categories">
 
-        <a href="${pageContext.request.contextPath}/products?category=Books"
-           class="category">
+        <a href="products?category=Books"
+   class="category">
 
-            <div class="category-icon">📚</div>
+    <div class="category-icon">📚</div>
 
-            <h3>Books</h3>
+    <h3>Books</h3>
 
-            <p>
-                Textbooks & reference books
-            </p>
+    <p>
+        Textbooks & reference books
+    </p>
 
-        </a>
+</a>
 
 
-        <a href="${pageContext.request.contextPath}/products?category=Study%20Materials"
-           class="category">
+        <a href="products?category=Study%20Materials" class="category">
 
             <div class="category-icon">📝</div>
 
@@ -374,8 +373,7 @@
         </a>
 
 
-        <a href="${pageContext.request.contextPath}/products?category=Stationery"
-           class="category">
+        <a href="products?category=Stationery" class="category">
 
             <div class="category-icon">✏️</div>
 
@@ -388,8 +386,7 @@
         </a>
 
 
-        <a href="${pageContext.request.contextPath}/products?category=Electronics"
-           class="category">
+        <a href="products?category=Electronics" class="category">
 
             <div class="category-icon">🧮</div>
 
@@ -402,8 +399,7 @@
         </a>
 
 
-        <a href="${pageContext.request.contextPath}/products?category=Accessories"
-           class="category">
+        <a href="products?category=Accessories" class="category">
 
             <div class="category-icon">🎒</div>
 
@@ -416,8 +412,7 @@
         </a>
 
 
-        <a href="${pageContext.request.contextPath}/products?category=Project%20Materials"
-           class="category">
+        <a href="products?category=Project%20Materials" class="category">
 
             <div class="category-icon">🔬</div>
 
@@ -430,8 +425,7 @@
         </a>
 
 
-        <a href="${pageContext.request.contextPath}/products?category=Merchandise"
-           class="category">
+        <a href="products?category=Merchandise" class="category">
 
             <div class="category-icon">👕</div>
 
@@ -444,8 +438,7 @@
         </a>
 
 
-        <a href="${pageContext.request.contextPath}/products"
-           class="category">
+        <a href="products" class="category">
 
             <div class="category-icon">🛍️</div>
 

@@ -83,6 +83,42 @@ body {
     font-size: 17px;
 }
 
+/* CATEGORY FILTER */
+
+.category-filter {
+    width: 86%;
+    margin: 0 auto 30px;
+
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.filter-btn {
+    background: white;
+    color: #172554;
+
+    padding: 10px 18px;
+
+    border-radius: 20px;
+
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    border: 1px solid #dbeafe;
+
+    transition: 0.2s;
+}
+
+.filter-btn:hover {
+    background: #2563eb;
+    color: white;
+    border-color: #2563eb;
+}
+
 /* PRODUCTS */
 
 .products-container {
@@ -158,6 +194,8 @@ body {
     justify-content: space-between;
 
     margin-top: 18px;
+
+    gap: 10px;
 }
 
 .price {
@@ -166,6 +204,14 @@ body {
     font-weight: bold;
 
     color: #172554;
+}
+
+/* BUTTONS */
+
+.button-group {
+    display: flex;
+    gap: 8px;
+    align-items: center;
 }
 
 .add-btn {
@@ -192,6 +238,28 @@ body {
     background: #1d4ed8;
 }
 
+.details-btn {
+    background: #e2e8f0;
+
+    color: #172554;
+
+    padding: 9px 14px;
+
+    border-radius: 6px;
+
+    text-decoration: none;
+
+    font-weight: bold;
+
+    display: inline-block;
+}
+
+.details-btn:hover {
+    background: #cbd5e1;
+}
+
+/* EMPTY MESSAGE */
+
 .empty-message {
     text-align: center;
 
@@ -200,6 +268,32 @@ body {
     padding: 50px;
 
     color: #64748b;
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .navbar {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .product-bottom {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .button-group {
+        justify-content: center;
+    }
+
 }
 
 </style>
@@ -218,27 +312,27 @@ body {
 
     <div class="nav-links">
 
-    <a href="index.jsp">
-        Home
-    </a>
+        <a href="index.jsp">
+            Home
+        </a>
 
-    <a href="products">
-        Products
-    </a>
+        <a href="products">
+            Products
+        </a>
 
-    <a href="cart">
-        🛒 Cart
-    </a>
+        <a href="cart">
+            🛒 Cart
+        </a>
 
-    <a href="my-orders">
-        📦 My Orders
-    </a>
+        <a href="my-orders">
+            📦 My Orders
+        </a>
 
-    <a href="login.jsp">
-        Login
-    </a>
+        <a href="login.jsp">
+            Login
+        </a>
 
-</div>
+    </div>
 
 </nav>
 
@@ -254,6 +348,42 @@ body {
     </p>
 
 </section>
+
+
+<!-- CATEGORY FILTER -->
+
+<%
+    String selectedCategory = request.getParameter("category");
+%>
+
+<div class="category-filter">
+
+    <a href="products"
+       class="filter-btn">
+        All
+    </a>
+
+    <a href="products?category=Books"
+       class="filter-btn">
+        Books
+    </a>
+
+    <a href="products?category=Electronics"
+       class="filter-btn">
+        Electronics
+    </a>
+
+    <a href="products?category=Stationery"
+       class="filter-btn">
+        Stationery
+    </a>
+
+    <a href="products?category=Lab%20Essentials"
+       class="filter-btn">
+        Lab Essentials
+    </a>
+
+</div>
 
 
 <!-- PRODUCTS -->
@@ -311,15 +441,29 @@ body {
                 ₹<%= String.format("%.0f", product.getPrice()) %>
             </span>
 
-            <!-- ADD TO CART -->
+            <div class="button-group">
 
-            <a
-                href="cart?name=<%= name %>&category=<%= category %>&price=<%= price %>&icon=<%= image %>"
-                class="add-btn">
+                <!-- VIEW DETAILS -->
 
-                Add to Cart
+                <a
+                    href="product-details?id=<%= product.getId() %>"
+                    class="details-btn">
 
-            </a>
+                    View Details
+
+                </a>
+
+                <!-- ADD TO CART -->
+
+                <a
+                    href="cart?name=<%= name %>&category=<%= category %>&price=<%= price %>&icon=<%= image %>"
+                    class="add-btn">
+
+                    Add to Cart
+
+                </a>
+
+            </div>
 
         </div>
 

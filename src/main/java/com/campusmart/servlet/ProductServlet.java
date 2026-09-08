@@ -9,89 +9,36 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/products")
 public class ProductServlet extends HttpServlet {
+
+    private ProductDAO productDAO;
+
+    @Override
+    public void init() {
+        productDAO = new ProductDAO();
+    }
 
     @Override
     protected void doGet(HttpServletRequest request,
                           HttpServletResponse response)
             throws ServletException, IOException {
 
-        List<Product> productList = new ArrayList<>();
+        List<Product> productList;
 
         String category = request.getParameter("category");
+
         System.out.println("CATEGORY RECEIVED = " + category);
 
-        try {
+        if (category == null || category.isEmpty()) {
 
-            Connection connection = DBConnection.getConnection();
+            productList = productDAO.getAllProducts();
 
-            String sql;
+        } else {
 
-            if (category == null || category.isEmpty()) {
-
-                sql = "SELECT * FROM products";
-
-            } else {
-
-                sql = "SELECT * FROM products WHERE category = ?";
-            }
-
-            PreparedStatement statement =
-                    connection.prepareStatement(sql);
-
-            if (category != null && !category.isEmpty()) {
-
-                statement.setString(1, category);
-            }
-
-            ResultSet resultSet =
-                    statement.executeQuery();
-
-            while (resultSet.next()) {
-
-                Product product = new Product();
-
-                product.setId(
-                        resultSet.getInt("id")
-                );
-
-                product.setName(
-                        resultSet.getString("name")
-                );
-
-                product.setCategory(
-                        resultSet.getString("category")
-                );
-
-                product.setPrice(
-                        resultSet.getDouble("price")
-                );
-
-                product.setDescription(
-                        resultSet.getString("description")
-                );
-
-                product.setImage(
-                        resultSet.getString("image")
-                );
-
-                productList.add(product);
-            }
-
-            resultSet.close();
-            statement.close();
-            connection.close();
-
-        } catch (Exception e) {
-
-            e.printStackTrace();
+            productList = productDAO.getProductsByCategory(category);
         }
 
         request.setAttribute("products", productList);

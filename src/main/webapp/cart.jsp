@@ -1,5 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.Map" %>
 
 <!DOCTYPE html>
 
@@ -122,6 +125,13 @@
             align-items: center;
             justify-content: center;
             font-size: 40px;
+            overflow: hidden;
+        }
+
+        .product-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
         .product-info h3 {
@@ -226,6 +236,46 @@
             font-size: 18px;
         }
 
+        .quantity-form {
+            display: inline;
+        }
+
+        @media (max-width: 768px) {
+
+            .navbar {
+                padding: 0 20px;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .nav-links a {
+                font-size: 13px;
+            }
+
+            .cart-container {
+                width: 95%;
+                margin: 30px auto;
+            }
+
+            .cart-content {
+                padding: 20px;
+            }
+
+            .cart-item {
+                flex-wrap: wrap;
+            }
+
+            .product-info {
+                min-width: 100%;
+            }
+
+            .price {
+                text-align: left;
+            }
+        }
+
     </style>
 
 </head>
@@ -240,27 +290,27 @@
 
     <div class="nav-links">
 
-    <a href="index.jsp">
-        Home
-    </a>
+        <a href="index.jsp">
+            Home
+        </a>
 
-    <a href="products">
-        Products
-    </a>
+        <a href="products">
+            Products
+        </a>
 
-    <a href="cart">
-        🛒 Cart
-    </a>
+        <a href="cart">
+            🛒 Cart
+        </a>
 
-    <a href="my-orders">
-        📦 My Orders
-    </a>
+        <a href="my-orders">
+            📦 My Orders
+        </a>
 
-    <a href="login.jsp" class="login-btn">
-        Login
-    </a>
+        <a href="login.jsp" class="login-btn">
+            Login
+        </a>
 
-</div>
+    </div>
 
 </nav>
 
@@ -292,16 +342,71 @@
         <%
             } else {
 
+                /*
+                 * Count quantity of each product.
+                 */
+                Map<String, Integer> quantityMap =
+                        new HashMap<>();
+
+                Map<String, String> productMap =
+                        new HashMap<>();
+
                 for (String product : cart) {
 
-                    String[] details = product.split("\\|");
+                    String[] details =
+                            product.split("\\|", -1);
 
-                    String name = details[0];
-                    String category = details[1];
-                    double price = Double.parseDouble(details[2]);
+                    if (details.length >= 3) {
+
+                        String productName =
+                                details[0];
+
+                        productMap.put(
+                                productName,
+                                product
+                        );
+
+                        quantityMap.put(
+                                productName,
+                                quantityMap.getOrDefault(
+                                        productName,
+                                        0
+                                ) + 1
+                        );
+                    }
+                }
+
+                for (String productName : quantityMap.keySet()) {
+
+                    String product =
+                            productMap.get(productName);
+
+                    String[] details =
+                            product.split("\\|", -1);
+
+                    String name =
+                            details[0];
+
+                    String category =
+                            details.length > 1
+                                    ? details[1]
+                                    : "";
+
+                    double price =
+                            details.length > 2
+                                    ? Double.parseDouble(details[2])
+                                    : 0;
 
                     String icon =
-                            details.length > 3 ? details[3] : "🛒";
+                            details.length > 3
+                                    ? details[3]
+                                    : "";
+
+                    int quantity =
+                            quantityMap.get(productName);
+
+                    double itemTotal =
+                            price * quantity;
         %>
 
             <div class="cart-item">
@@ -309,7 +414,25 @@
                 <div class="product-info">
 
                     <div class="product-icon">
-                        <%= icon %>
+
+                        <%
+                            if (icon != null &&
+                                !icon.isEmpty()) {
+                        %>
+
+                            <img src="<%= icon %>"
+                                 alt="<%= name %>">
+
+                        <%
+                            } else {
+                        %>
+
+                            🛒
+
+                        <%
+                            }
+                        %>
+
                     </div>
 
                     <div>
@@ -329,37 +452,72 @@
 
                 <div class="quantity">
 
-                    <button type="button"
-                            onclick="changeQuantity(this, -1)">
-                        −
-                    </button>
+                    <form action="cart"
+                          method="get"
+                          class="quantity-form">
+
+                        <input type="hidden"
+                               name="action"
+                               value="change">
+
+                        <input type="hidden"
+                               name="productName"
+                               value="<%= name %>">
+
+                        <input type="hidden"
+                               name="change"
+                               value="-1">
+
+                        <button type="submit">
+                            −
+                        </button>
+
+                    </form>
+
 
                     <span class="quantity-value">
-                        1
+                        <%= quantity %>
                     </span>
 
-                    <button type="button"
-                            onclick="changeQuantity(this, 1)">
-                        +
-                    </button>
+
+                    <form action="cart"
+                          method="get"
+                          class="quantity-form">
+
+                        <input type="hidden"
+                               name="action"
+                               value="change">
+
+                        <input type="hidden"
+                               name="productName"
+                               value="<%= name %>">
+
+                        <input type="hidden"
+                               name="change"
+                               value="1">
+
+                        <button type="submit">
+                            +
+                        </button>
+
+                    </form>
 
                 </div>
 
 
-                <div class="price"
-                     data-price="<%= price %>">
+                <div class="price">
 
-                    ₹<span class="item-total">
-                        <%= String.format("%.0f", price) %>
-                    </span>
+                    ₹<%= String.format("%.0f", itemTotal) %>
 
                 </div>
 
 
                 <button type="button"
                         class="remove-btn"
-                        onclick="removeItem(this, '<%= name %>')">
+                        onclick="removeItem('<%= name %>')">
+
                     Remove
+
                 </button>
 
             </div>
@@ -375,10 +533,31 @@
 
                     <div class="summary-row">
 
-                        <span>Subtotal</span>
+                        <span>
+                            Subtotal
+                        </span>
 
-                        <strong id="subtotal">
-                            ₹0
+                        <strong>
+                            ₹<%
+                                double subtotal = 0;
+
+                                for (String product : cart) {
+
+                                    String[] details =
+                                            product.split("\\|", -1);
+
+                                    if (details.length >= 3) {
+                                        subtotal +=
+                                            Double.parseDouble(
+                                                details[2]
+                                            );
+                                    }
+                                }
+
+                                out.print(
+                                    String.format("%.0f", subtotal)
+                                );
+                            %>
                         </strong>
 
                     </div>
@@ -386,7 +565,9 @@
 
                     <div class="summary-row">
 
-                        <span>Delivery</span>
+                        <span>
+                            Delivery
+                        </span>
 
                         <strong>
                             ₹0
@@ -397,16 +578,35 @@
 
                     <div class="summary-row total">
 
-                        <span>Total</span>
+                        <span>
+                            Total
+                        </span>
 
-                        <strong id="grand-total">
-                            ₹0
+                        <strong>
+                            ₹<%
+                                double total = 0;
+
+                                for (String product : cart) {
+
+                                    String[] details =
+                                            product.split("\\|", -1);
+
+                                    if (details.length >= 3) {
+                                        total +=
+                                            Double.parseDouble(
+                                                details[2]
+                                            );
+                                    }
+                                }
+
+                                out.print(
+                                    String.format("%.0f", total)
+                                );
+                            %>
                         </strong>
 
                     </div>
 
-
-                    <!-- CHECKOUT CONNECTED TO ORDER SERVLET -->
 
                     <form action="order" method="post">
 
@@ -434,88 +634,13 @@
 
 <script>
 
-    function changeQuantity(button, change) {
-
-        const quantityContainer =
-            button.parentElement;
-
-        const quantityElement =
-            quantityContainer.querySelector(".quantity-value");
-
-        let quantity =
-            parseInt(quantityElement.textContent);
-
-        quantity += change;
-
-        if (quantity < 1) {
-            quantity = 1;
-        }
-
-        quantityElement.textContent = quantity;
-
-        const cartItem =
-            button.closest(".cart-item");
-
-        const priceElement =
-            cartItem.querySelector(".price");
-
-        const unitPrice =
-            parseFloat(priceElement.dataset.price);
-
-        const itemTotal =
-            cartItem.querySelector(".item-total");
-
-        itemTotal.textContent =
-            Math.round(unitPrice * quantity);
-
-        calculateTotal();
-    }
-
-
-    function removeItem(button, productName) {
+    function removeItem(productName) {
 
         window.location.href =
             "remove-cart?name=" +
             encodeURIComponent(productName);
+
     }
-
-
-    function calculateTotal() {
-
-        const cartItems =
-            document.querySelectorAll(".cart-item");
-
-        let subtotal = 0;
-
-        cartItems.forEach(function(item) {
-
-            const priceElement =
-                item.querySelector(".price");
-
-            const unitPrice =
-                parseFloat(priceElement.dataset.price);
-
-            const quantityElement =
-                item.querySelector(".quantity-value");
-
-            const quantity =
-                parseInt(quantityElement.textContent);
-
-            subtotal += unitPrice * quantity;
-
-        });
-
-
-        document.getElementById("subtotal").textContent =
-            "₹" + Math.round(subtotal);
-
-
-        document.getElementById("grand-total").textContent =
-            "₹" + Math.round(subtotal);
-    }
-
-
-    calculateTotal();
 
 </script>
 

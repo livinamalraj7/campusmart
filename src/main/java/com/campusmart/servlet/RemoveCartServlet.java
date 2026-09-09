@@ -18,21 +18,34 @@ public class RemoveCartServlet extends HttpServlet {
                           HttpServletResponse response)
             throws ServletException, IOException {
 
-        String productName = request.getParameter("name");
+        String productName =
+                request.getParameter("name");
 
-        HttpSession session = request.getSession();
+        HttpSession session =
+                request.getSession();
 
         List<String> cart =
                 (List<String>) session.getAttribute("cart");
 
-        if (cart != null && productName != null) {
+        if (cart != null && productName != null
+                && !productName.trim().isEmpty()) {
 
-            cart.removeIf(product ->
-                    product.startsWith(productName + "|"));
+            cart.removeIf(product -> {
+
+                if (product == null) {
+                    return false;
+                }
+
+                return product.startsWith(
+                        productName + "|"
+                );
+            });
 
             session.setAttribute("cart", cart);
         }
 
-        response.sendRedirect("cart.jsp");
+        response.sendRedirect(
+                request.getContextPath() + "/cart.jsp"
+        );
     }
 }

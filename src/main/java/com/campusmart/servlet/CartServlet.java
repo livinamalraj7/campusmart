@@ -24,6 +24,9 @@ public class CartServlet extends HttpServlet {
         String price = request.getParameter("price");
         String icon = request.getParameter("icon");
 
+        String action = request.getParameter("action");
+        String change = request.getParameter("change");
+
         HttpSession session = request.getSession();
 
         List<String> cart =
@@ -33,13 +36,76 @@ public class CartServlet extends HttpServlet {
             cart = new ArrayList<>();
         }
 
+        /*
+         * ADD PRODUCT
+         */
         if (name != null && price != null) {
-            String product = name + "|" + category + "|" + price + "|" + icon;
+
+            String product =
+                    name + "|" +
+                    category + "|" +
+                    price + "|" +
+                    (icon == null ? "" : icon);
+
             cart.add(product);
+        }
+
+        /*
+         * CHANGE QUANTITY
+         */
+        if ("change".equals(action)) {
+
+            String productName =
+                    request.getParameter("productName");
+
+            int quantityChange = 0;
+
+            try {
+                quantityChange = Integer.parseInt(change);
+            } catch (Exception e) {
+                quantityChange = 0;
+            }
+
+            if (productName != null && quantityChange != 0) {
+
+                if (quantityChange > 0) {
+
+                    /*
+                     * Find an existing product and duplicate it
+                     * to increase the quantity.
+                     */
+                    for (String product : cart) {
+
+                        if (product.startsWith(productName + "|")) {
+
+                            cart.add(product);
+                            break;
+                        }
+                    }
+
+                } else {
+
+                    /*
+                     * Remove only one copy when quantity decreases.
+                     */
+                    for (int i = 0; i < cart.size(); i++) {
+
+                        String product = cart.get(i);
+
+                        if (product.startsWith(productName + "|")) {
+
+                            cart.remove(i);
+                            break;
+                        }
+                    }
+                }
+            }
         }
 
         session.setAttribute("cart", cart);
 
-        response.sendRedirect(request.getContextPath() + "/cart.jsp");
+        response.sendRedirect(
+                request.getContextPath() + "/cart.jsp"
+        );
     }
 }

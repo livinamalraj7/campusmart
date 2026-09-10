@@ -4,12 +4,16 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>CampusMart | Your Campus Marketplace</title>
 
     <style>
+
         * {
             margin: 0;
             padding: 0;
@@ -239,7 +243,9 @@
                 display: none;
             }
         }
+
     </style>
+
 </head>
 
 <body>
@@ -255,37 +261,37 @@
     <ul class="nav-links">
 
         <li>
-            <a href="${pageContext.request.contextPath}/index.jsp">
+            <a href="index.jsp">
                 Home
             </a>
         </li>
 
         <li>
-            <a href="/campusmart/products">
-    Products
-</a>
+            <a href="products">
+                Products
+            </a>
         </li>
 
         <li>
-            <a href="${pageContext.request.contextPath}/products">
+            <a href="products">
                 Categories
             </a>
         </li>
 
         <li>
-            <a href="${pageContext.request.contextPath}/cart">
+            <a href="cart">
                 Cart 🛒
             </a>
         </li>
 
         <li>
-            <a href="${pageContext.request.contextPath}/my-orders">
+            <a href="my-orders">
                 My Orders
             </a>
         </li>
 
         <li>
-            <a href="${pageContext.request.contextPath}/logout" class="login-btn">
+            <a href="logout" class="login-btn">
                 Logout
             </a>
         </li>
@@ -313,12 +319,9 @@
             college accessories.
         </p>
 
-        <!-- FIXED EXPLORE BUTTON -->
-
-        <a href="/campusmart/products"
-   class="shop-btn">
-    Explore CampusMart →
-</a>
+        <a href="products" class="shop-btn">
+            Explore CampusMart →
+        </a>
 
     </div>
 
@@ -347,20 +350,21 @@
     <div class="categories">
 
         <a href="products?category=Books"
-   class="category">
+           class="category">
 
-    <div class="category-icon">📚</div>
+            <div class="category-icon">📚</div>
 
-    <h3>Books</h3>
+            <h3>Books</h3>
 
-    <p>
-        Textbooks & reference books
-    </p>
+            <p>
+                Textbooks & reference books
+            </p>
 
-</a>
+        </a>
 
 
-        <a href="products?category=Study%20Materials" class="category">
+        <a href="products?category=Study%20Materials"
+           class="category">
 
             <div class="category-icon">📝</div>
 
@@ -373,7 +377,8 @@
         </a>
 
 
-        <a href="products?category=Stationery" class="category">
+        <a href="products?category=Stationery"
+           class="category">
 
             <div class="category-icon">✏️</div>
 
@@ -386,7 +391,8 @@
         </a>
 
 
-        <a href="products?category=Electronics" class="category">
+        <a href="products?category=Electronics"
+           class="category">
 
             <div class="category-icon">🧮</div>
 
@@ -399,7 +405,8 @@
         </a>
 
 
-        <a href="products?category=Accessories" class="category">
+        <a href="products?category=Accessories"
+           class="category">
 
             <div class="category-icon">🎒</div>
 
@@ -412,7 +419,8 @@
         </a>
 
 
-        <a href="products?category=Project%20Materials" class="category">
+        <a href="products?category=Project%20Materials"
+           class="category">
 
             <div class="category-icon">🔬</div>
 
@@ -425,7 +433,8 @@
         </a>
 
 
-        <a href="products?category=Merchandise" class="category">
+        <a href="products?category=Merchandise"
+           class="category">
 
             <div class="category-icon">👕</div>
 
@@ -438,7 +447,8 @@
         </a>
 
 
-        <a href="products" class="category">
+        <a href="products"
+           class="category">
 
             <div class="category-icon">🛍️</div>
 

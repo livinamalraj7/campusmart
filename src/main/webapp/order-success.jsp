@@ -68,12 +68,15 @@ body {
     margin-bottom: 30px;
 }
 
-.home-btn {
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.btn {
     display: inline-block;
-
-    background: #2563eb;
-
-    color: white;
 
     text-decoration: none;
 
@@ -84,8 +87,22 @@ body {
     font-weight: bold;
 }
 
-.home-btn:hover {
+.shop-btn {
+    background: #2563eb;
+    color: white;
+}
+
+.shop-btn:hover {
     background: #1d4ed8;
+}
+
+.orders-btn {
+    background: #e2e8f0;
+    color: #172554;
+}
+
+.orders-btn:hover {
+    background: #cbd5e1;
 }
 
 </style>
@@ -111,9 +128,17 @@ body {
             Your order has been received successfully.
         </p>
 
-        <a href="products" class="home-btn">
-            Continue Shopping
-        </a>
+        <div class="buttons">
+
+            <a href="products" class="btn shop-btn">
+                Continue Shopping
+            </a>
+
+            <a href="my-orders" class="btn orders-btn">
+                View My Orders
+            </a>
+
+        </div>
 
     </div>
 

@@ -3,7 +3,9 @@ package com.campusmart.servlet;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -57,6 +59,55 @@ public class OrderServlet extends HttpServlet {
 
         try {
 
+            /*
+             * Group duplicate products and calculate quantity.
+             *
+             * Cart format:
+             *
+             * name|category|price|icon
+             */
+
+            Map<String, Integer> quantityMap =
+                    new HashMap<>();
+
+            Map<String, String> productMap =
+                    new HashMap<>();
+
+            for (String product : cart) {
+
+                if (product == null) {
+                    continue;
+                }
+
+                String[] details =
+                        product.split("\\|", -1);
+
+                if (details.length < 3) {
+                    continue;
+                }
+
+                String name = details[0];
+
+                /*
+                 * Use product name as the key.
+                 */
+                quantityMap.put(
+                        name,
+                        quantityMap.getOrDefault(
+                                name,
+                                0
+                        ) + 1
+                );
+
+                /*
+                 * Store the complete product information.
+                 */
+                productMap.put(
+                        name,
+                        product
+                );
+            }
+
             connection = DBConnection.getConnection();
 
             String sql =
@@ -67,23 +118,34 @@ public class OrderServlet extends HttpServlet {
             statement =
                     connection.prepareStatement(sql);
 
-            for (String product : cart) {
+            /*
+             * Insert one row for each unique product.
+             */
+            for (String productName :
+                    quantityMap.keySet()) {
 
-                /*
-                 * Cart format:
-                 *
-                 * name|category|price|icon
-                 */
+                String product =
+                        productMap.get(productName);
 
                 String[] details =
-                        product.split("\\|");
+                        product.split("\\|", -1);
 
-                String name = details[0];
+                String name =
+                        details[0];
 
-                String category = details[1];
+                String category =
+                        details.length > 1
+                                ? details[1]
+                                : "";
 
                 double price =
-                        Double.parseDouble(details[2]);
+                        details.length > 2
+                                ? Double.parseDouble(
+                                        details[2])
+                                : 0;
+
+                int quantity =
+                        quantityMap.get(productName);
 
                 statement.setString(
                         1,
@@ -107,13 +169,15 @@ public class OrderServlet extends HttpServlet {
 
                 statement.setInt(
                         5,
-                        1
+                        quantity
                 );
 
                 statement.executeUpdate();
             }
 
-            // Remove cart only after successful insertion
+            /*
+             * Remove cart only after successful insertion.
+             */
             session.removeAttribute("cart");
 
             response.sendRedirect(

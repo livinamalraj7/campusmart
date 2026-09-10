@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.Map" %>
 
@@ -121,17 +120,13 @@
             height: 80px;
             background: #edf4ff;
             border-radius: 10px;
+
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 40px;
-            overflow: hidden;
-        }
 
-        .product-icon img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
+            font-size: 42px;
+            flex-shrink: 0;
         }
 
         .product-info h3 {
@@ -151,9 +146,11 @@
         .quantity button {
             width: 32px;
             height: 32px;
+
             border: 1px solid #cbd5e1;
             background: white;
             border-radius: 5px;
+
             cursor: pointer;
             font-size: 18px;
         }
@@ -171,6 +168,7 @@
         .price {
             min-width: 90px;
             text-align: right;
+
             font-size: 18px;
             font-weight: bold;
         }
@@ -179,7 +177,9 @@
             border: none;
             background: #fee2e2;
             color: #dc2626;
+
             padding: 8px 12px;
+
             border-radius: 5px;
             cursor: pointer;
         }
@@ -201,27 +201,38 @@
         .summary-row {
             display: flex;
             justify-content: space-between;
+
             margin-bottom: 15px;
+
             font-size: 17px;
         }
 
         .total {
             font-size: 22px;
             font-weight: bold;
+
             border-top: 1px solid #ddd;
+
             padding-top: 15px;
         }
 
         .checkout-btn {
             width: 100%;
+
             border: none;
+
             background: #2563eb;
             color: white;
+
             padding: 14px;
+
             margin-top: 20px;
+
             border-radius: 7px;
+
             font-size: 16px;
             font-weight: bold;
+
             cursor: pointer;
         }
 
@@ -231,8 +242,11 @@
 
         .empty-cart {
             text-align: center;
+
             padding: 50px;
+
             color: #64748b;
+
             font-size: 18px;
         }
 
@@ -274,19 +288,25 @@
             .price {
                 text-align: left;
             }
+
         }
 
     </style>
 
 </head>
 
+
 <body>
+
 
 <nav class="navbar">
 
     <div class="logo">
+
         🎓 Campus<span>Mart</span>
+
     </div>
+
 
     <div class="nav-links">
 
@@ -306,8 +326,11 @@
             📦 My Orders
         </a>
 
-        <a href="login.jsp" class="login-btn">
+        <a href="login.jsp"
+           class="login-btn">
+
             Login
+
         </a>
 
     </div>
@@ -317,54 +340,81 @@
 
 <div class="cart-container">
 
+
     <div class="cart-title">
 
-        <h1>🛒 Your Cart</h1>
+        <h1>
+            🛒 Your Cart
+        </h1>
 
-        <p>Review your selected campus essentials</p>
+        <p>
+            Review your selected campus essentials
+        </p>
 
     </div>
 
 
     <div class="cart-content">
 
+
         <%
+
             List<String> cart =
                     (List<String>) session.getAttribute("cart");
 
+
             if (cart == null || cart.isEmpty()) {
+
         %>
 
+
             <div class="empty-cart">
+
                 Your cart is empty 🛒
+
             </div>
 
+
         <%
+
             } else {
 
+
                 /*
-                 * Count quantity of each product.
+                 * Store quantity of each product.
                  */
+
                 Map<String, Integer> quantityMap =
                         new HashMap<>();
+
+
+                /*
+                 * Store complete product information.
+                 */
 
                 Map<String, String> productMap =
                         new HashMap<>();
 
+
                 for (String product : cart) {
+
 
                     String[] details =
                             product.split("\\|", -1);
 
+
                     if (details.length >= 3) {
+
 
                         String productName =
                                 details[0];
+
 
                         productMap.put(
                                 productName,
                                 product
                         );
+
 
                         quantityMap.put(
                                 productName,
@@ -373,76 +423,91 @@
                                         0
                                 ) + 1
                         );
+
                     }
+
                 }
 
-                for (String productName : quantityMap.keySet()) {
+
+                /*
+                 * Display each unique product.
+                 */
+
+                for (String productName :
+                        quantityMap.keySet()) {
+
 
                     String product =
                             productMap.get(productName);
 
+
                     String[] details =
                             product.split("\\|", -1);
 
+
                     String name =
                             details[0];
+
 
                     String category =
                             details.length > 1
                                     ? details[1]
                                     : "";
 
+
                     double price =
                             details.length > 2
-                                    ? Double.parseDouble(details[2])
+                                    ? Double.parseDouble(
+                                            details[2])
                                     : 0;
+
 
                     String icon =
                             details.length > 3
                                     ? details[3]
                                     : "";
 
+
                     int quantity =
                             quantityMap.get(productName);
 
+
                     double itemTotal =
                             price * quantity;
+
         %>
+
 
             <div class="cart-item">
 
+
+                <!-- PRODUCT INFORMATION -->
+
                 <div class="product-info">
+
+
+                    <!-- EMOJI -->
 
                     <div class="product-icon">
 
-                        <%
-                            if (icon != null &&
-                                !icon.isEmpty()) {
-                        %>
-
-                            <img src="<%= icon %>"
-                                 alt="<%= name %>">
-
-                        <%
-                            } else {
-                        %>
-
-                            🛒
-
-                        <%
-                            }
-                        %>
+                        <%= icon %>
 
                     </div>
+
 
                     <div>
 
                         <h3>
+
                             <%= name %>
+
                         </h3>
 
+
                         <p>
+
                             <%= category %>
+
                         </p>
 
                     </div>
@@ -450,86 +515,130 @@
                 </div>
 
 
+                <!-- QUANTITY -->
+
                 <div class="quantity">
+
+
+                    <!-- DECREASE -->
 
                     <form action="cart"
                           method="get"
                           class="quantity-form">
 
+
                         <input type="hidden"
                                name="action"
                                value="change">
 
+
                         <input type="hidden"
                                name="productName"
                                value="<%= name %>">
+
 
                         <input type="hidden"
                                name="change"
                                value="-1">
 
+
                         <button type="submit">
+
                             −
+
                         </button>
+
 
                     </form>
 
 
                     <span class="quantity-value">
+
                         <%= quantity %>
+
                     </span>
 
+
+                    <!-- INCREASE -->
 
                     <form action="cart"
                           method="get"
                           class="quantity-form">
 
+
                         <input type="hidden"
                                name="action"
                                value="change">
+
 
                         <input type="hidden"
                                name="productName"
                                value="<%= name %>">
 
+
                         <input type="hidden"
                                name="change"
                                value="1">
 
+
                         <button type="submit">
+
                             +
+
                         </button>
+
 
                     </form>
 
+
                 </div>
 
+
+                <!-- PRICE -->
 
                 <div class="price">
 
-                    ₹<%= String.format("%.0f", itemTotal) %>
+                    ₹<%= String.format(
+                            "%.0f",
+                            itemTotal
+                        ) %>
 
                 </div>
 
 
+                <!-- REMOVE -->
+
                 <button type="button"
                         class="remove-btn"
-                        onclick="removeItem('<%= name %>')">
+                        onclick="removeItem(
+                            '<%= name %>'
+                        )">
 
                     Remove
 
                 </button>
 
+
             </div>
 
+
         <%
+
                 }
+
+
         %>
 
 
+            <!-- CART SUMMARY -->
+
             <div class="cart-summary">
 
+
                 <div class="summary-box">
+
+
+                    <!-- SUBTOTAL -->
 
                     <div class="summary-row">
 
@@ -537,37 +646,59 @@
                             Subtotal
                         </span>
 
+
                         <strong>
+
                             ₹<%
+
                                 double subtotal = 0;
 
-                                for (String product : cart) {
+
+                                for (String product :
+                                        cart) {
+
 
                                     String[] details =
-                                            product.split("\\|", -1);
+                                            product.split(
+                                                "\\|",
+                                                -1
+                                            );
+
 
                                     if (details.length >= 3) {
+
                                         subtotal +=
                                             Double.parseDouble(
                                                 details[2]
                                             );
+
                                     }
+
                                 }
 
+
                                 out.print(
-                                    String.format("%.0f", subtotal)
+                                    String.format(
+                                        "%.0f",
+                                        subtotal
+                                    )
                                 );
+
                             %>
+
                         </strong>
 
                     </div>
 
+
+                    <!-- DELIVERY -->
 
                     <div class="summary-row">
 
                         <span>
                             Delivery
                         </span>
+
 
                         <strong>
                             ₹0
@@ -576,39 +707,64 @@
                     </div>
 
 
+                    <!-- TOTAL -->
+
                     <div class="summary-row total">
 
                         <span>
                             Total
                         </span>
 
+
                         <strong>
+
                             ₹<%
+
                                 double total = 0;
 
-                                for (String product : cart) {
+
+                                for (String product :
+                                        cart) {
+
 
                                     String[] details =
-                                            product.split("\\|", -1);
+                                            product.split(
+                                                "\\|",
+                                                -1
+                                            );
+
 
                                     if (details.length >= 3) {
+
                                         total +=
                                             Double.parseDouble(
                                                 details[2]
                                             );
+
                                     }
+
                                 }
 
+
                                 out.print(
-                                    String.format("%.0f", total)
+                                    String.format(
+                                        "%.0f",
+                                        total
+                                    )
                                 );
+
                             %>
+
                         </strong>
 
                     </div>
 
 
-                    <form action="order" method="post">
+                    <!-- CHECKOUT -->
+
+                    <form action="order"
+                          method="post">
+
 
                         <button type="submit"
                                 class="checkout-btn">
@@ -617,15 +773,21 @@
 
                         </button>
 
+
                     </form>
+
 
                 </div>
 
             </div>
 
+
         <%
+
             }
+
         %>
+
 
     </div>
 
@@ -643,6 +805,7 @@
     }
 
 </script>
+
 
 </body>
 

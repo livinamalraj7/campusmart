@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -53,7 +52,19 @@
         .subtitle {
             text-align: center;
             color: #64748b;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
+        }
+
+        .error-message {
+            background: #fee2e2;
+            color: #b91c1c;
+            border: 1px solid #fecaca;
+            padding: 10px;
+            border-radius: 7px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 14px;
+            font-weight: bold;
         }
 
         .form-group {
@@ -142,6 +153,24 @@
         <p class="subtitle">
             Login to your CampusMart account
         </p>
+
+        <%
+            String error = request.getParameter("error");
+        %>
+
+        <% if ("invalid".equals(error)) { %>
+
+            <div class="error-message">
+                Invalid email or password. Please try again.
+            </div>
+
+        <% } else if ("server".equals(error)) { %>
+
+            <div class="error-message">
+                Something went wrong. Please try again later.
+            </div>
+
+        <% } %>
 
         <form action="login" method="post">
 

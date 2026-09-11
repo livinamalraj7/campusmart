@@ -20,65 +20,77 @@ public class ProductDetailsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request,
                           HttpServletResponse response)
             throws ServletException, IOException {
+
         System.out.println("PRODUCT DETAILS SERVLET CALLED");
 
         String idParameter = request.getParameter("id");
 
-        if (idParameter == null || idParameter.isEmpty()) {
-            response.sendRedirect("products");
+        // No product ID provided
+        if (idParameter == null || idParameter.trim().isEmpty()) {
+            response.sendRedirect("products?error=invalid");
             return;
         }
 
+        int id;
+
+        // Invalid product ID
         try {
+            id = Integer.parseInt(idParameter);
+        } catch (NumberFormatException e) {
+            response.sendRedirect("products?error=invalid");
+            return;
+        }
 
-            int id = Integer.parseInt(idParameter);
+        String sql = "SELECT * FROM products WHERE id = ?";
 
+        try (
             Connection connection = DBConnection.getConnection();
-
-            String sql = "SELECT * FROM products WHERE id = ?";
-
             PreparedStatement statement =
-                    connection.prepareStatement(sql);
+                    connection.prepareStatement(sql)
+        ) {
 
             statement.setInt(1, id);
 
-            ResultSet resultSet =
-                    statement.executeQuery();
+            try (ResultSet resultSet = statement.executeQuery()) {
 
-            if (resultSet.next()) {
+                if (resultSet.next()) {
 
-                Product product = new Product();
+                    Product product = new Product();
 
-                product.setId(resultSet.getInt("id"));
-                product.setName(resultSet.getString("name"));
-                product.setCategory(resultSet.getString("category"));
-                product.setPrice(resultSet.getDouble("price"));
-                product.setDescription(resultSet.getString("description"));
-                product.setImage(resultSet.getString("image"));
+                    product.setId(resultSet.getInt("id"));
+                    product.setName(resultSet.getString("name"));
+                    product.setCategory(resultSet.getString("category"));
+                    product.setPrice(resultSet.getDouble("price"));
+                    product.setDescription(
+                            resultSet.getString("description")
+                    );
+                    product.setImage(
+                            resultSet.getString("image")
+                    );
 
-                request.setAttribute("product", product);
+                    request.setAttribute("product", product);
 
-                resultSet.close();
-                statement.close();
-                connection.close();
+                    request.getRequestDispatcher(
+                            "/product-details.jsp"
+                    ).forward(request, response);
 
-                request.getRequestDispatcher("/product-details.jsp")
-                       .forward(request, response);
+                } else {
 
-            } else {
-
-                resultSet.close();
-                statement.close();
-                connection.close();
-
-                response.sendRedirect("products");
+                    // Product ID does not exist
+                    response.sendRedirect(
+                            "products?error=notfound"
+                    );
+                }
             }
 
         } catch (Exception e) {
 
             e.printStackTrace();
 
-            response.sendRedirect("products");
+            // Database/server error
+            response.sendRedirect(
+                    "products?error=server"
+            );
         }
     }
 }

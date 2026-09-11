@@ -83,6 +83,27 @@ body {
     font-size: 17px;
 }
 
+/* ERROR MESSAGE */
+
+.error-message {
+    width: 86%;
+    max-width: 900px;
+    margin: 0 auto 25px;
+
+    background: #fee2e2;
+    color: #b91c1c;
+
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+
+    padding: 12px 16px;
+
+    text-align: center;
+
+    font-size: 14px;
+    font-weight: bold;
+}
+
 /* CATEGORY FILTER */
 
 .category-filter {
@@ -348,6 +369,34 @@ body {
     </p>
 
 </section>
+
+
+<!-- ERROR MESSAGES -->
+
+<%
+    String error = request.getParameter("error");
+%>
+
+<% if ("invalid".equals(error)) { %>
+
+    <div class="error-message">
+        Invalid product request. Please select a valid product.
+    </div>
+
+<% } else if ("notfound".equals(error)) { %>
+
+    <div class="error-message">
+        Sorry, the product you are looking for was not found.
+    </div>
+
+<% } else if ("server".equals(error)) { %>
+
+    <div class="error-message">
+        Something went wrong while loading the product.
+        Please try again later.
+    </div>
+
+<% } %>
 
 
 <!-- CATEGORY FILTER -->

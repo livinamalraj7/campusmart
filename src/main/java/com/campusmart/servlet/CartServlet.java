@@ -39,11 +39,12 @@ public class CartServlet extends HttpServlet {
         /*
          * ADD PRODUCT
          */
-        if (name != null && price != null) {
+        if (name != null && !name.trim().isEmpty()
+                && price != null && !price.trim().isEmpty()) {
 
             String product =
                     name + "|" +
-                    category + "|" +
+                    (category == null ? "" : category) + "|" +
                     price + "|" +
                     (icon == null ? "" : icon);
 
@@ -66,7 +67,9 @@ public class CartServlet extends HttpServlet {
                 quantityChange = 0;
             }
 
-            if (productName != null && quantityChange != 0) {
+            if (productName != null
+                    && !productName.trim().isEmpty()
+                    && quantityChange != 0) {
 
                 if (quantityChange > 0) {
 
@@ -104,6 +107,9 @@ public class CartServlet extends HttpServlet {
 
         session.setAttribute("cart", cart);
 
+        /*
+         * Redirect to cart page
+         */
         response.sendRedirect(
                 request.getContextPath() + "/cart.jsp"
         );

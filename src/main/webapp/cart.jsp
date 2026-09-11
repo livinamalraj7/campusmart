@@ -1,58 +1,50 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.Map" %>
 
 <!DOCTYPE html>
-
-<html lang="en">
-
+<html>
 <head>
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>Cart | CampusMart</title>
+    <title>Cart - CampusMart</title>
 
     <style>
 
         * {
             box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
         }
 
         body {
-            background: #f1f5fb;
-            color: #172d63;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #222;
         }
 
+        /* NAVBAR */
+
         .navbar {
-            height: 70px;
-            background: #192b61;
+            background: #111827;
+            color: white;
+            padding: 15px 40px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            padding: 0 7%;
+            align-items: center;
+            flex-wrap: wrap;
         }
 
         .logo {
-            color: white;
-            font-size: 28px;
+            font-size: 24px;
             font-weight: bold;
-        }
-
-        .logo span {
-            color: #3d7af2;
         }
 
         .nav-links {
             display: flex;
-            gap: 28px;
-            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
         }
 
         .nav-links a {
@@ -62,745 +54,694 @@
         }
 
         .nav-links a:hover {
-            color: #93c5fd;
+            text-decoration: underline;
         }
 
-        .login-btn {
-            background: #2563eb;
-            padding: 9px 18px;
-            border-radius: 6px;
-        }
+        /* MAIN */
 
-        .cart-container {
-            width: 85%;
+        .container {
+            width: 90%;
             max-width: 1100px;
-            margin: 50px auto;
+            margin: 40px auto;
         }
 
-        .cart-title {
-            text-align: center;
-            margin-bottom: 35px;
+        h1 {
+            margin-bottom: 25px;
         }
 
-        .cart-title h1 {
-            font-size: 40px;
-            margin-bottom: 10px;
+        /* ERROR MESSAGE */
+
+        .error-message {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffe69c;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
         }
 
-        .cart-title p {
-            color: #5d7098;
-            font-size: 17px;
-        }
+        /* EMPTY CART */
 
-        .cart-content {
+        .empty-cart {
             background: white;
+            padding: 50px 20px;
+            text-align: center;
             border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
         }
+
+        .empty-cart p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .shop-btn {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 11px 20px;
+            border-radius: 7px;
+        }
+
+        .shop-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* CART ITEM */
 
         .cart-item {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 12px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
             gap: 20px;
-            padding: 20px 0;
-            border-bottom: 1px solid #e2e8f0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.07);
         }
 
         .product-info {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 15px;
             flex: 1;
         }
 
         .product-icon {
-            width: 80px;
-            height: 80px;
-            background: #edf4ff;
-            border-radius: 10px;
+            font-size: 42px;
+            width: 65px;
+            text-align: center;
+        }
 
+        .product-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .product-category {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .product-price {
+            color: #2563eb;
+            font-weight: bold;
+        }
+
+        /* QUANTITY */
+
+        .quantity-section {
             display: flex;
             align-items: center;
-            justify-content: center;
-
-            font-size: 42px;
-            flex-shrink: 0;
+            gap: 8px;
         }
 
-        .product-info h3 {
-            margin-bottom: 7px;
+        .quantity-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: #e5e7eb;
+            border-radius: 6px;
+            font-size: 18px;
+            cursor: pointer;
         }
 
-        .product-info p {
-            color: #64748b;
+        .quantity-btn:hover {
+            background: #d1d5db;
         }
 
         .quantity {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .quantity button {
-            width: 32px;
-            height: 32px;
-
-            border: 1px solid #cbd5e1;
-            background: white;
-            border-radius: 5px;
-
-            cursor: pointer;
-            font-size: 18px;
-        }
-
-        .quantity button:hover {
-            background: #eff6ff;
-        }
-
-        .quantity span {
             min-width: 25px;
             text-align: center;
             font-weight: bold;
         }
 
-        .price {
-            min-width: 90px;
-            text-align: right;
+        /* ITEM TOTAL */
 
-            font-size: 18px;
+        .item-total {
+            min-width: 100px;
+            text-align: right;
             font-weight: bold;
         }
 
+        /* REMOVE */
+
         .remove-btn {
+            background: #dc2626;
+            color: white;
             border: none;
-            background: #fee2e2;
-            color: #dc2626;
-
             padding: 8px 12px;
-
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
         }
 
         .remove-btn:hover {
-            background: #fecaca;
+            background: #b91c1c;
         }
 
-        .cart-summary {
-            margin-top: 30px;
-            display: flex;
-            justify-content: flex-end;
-        }
+        /* SUMMARY */
 
-        .summary-box {
-            width: 320px;
+        .summary {
+            background: white;
+            margin-top: 25px;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.07);
+            max-width: 450px;
+            margin-left: auto;
         }
 
         .summary-row {
             display: flex;
             justify-content: space-between;
-
-            margin-bottom: 15px;
-
-            font-size: 17px;
+            margin-bottom: 12px;
+            font-size: 16px;
         }
 
-        .total {
-            font-size: 22px;
-            font-weight: bold;
-
+        .total-row {
             border-top: 1px solid #ddd;
-
             padding-top: 15px;
+            margin-top: 15px;
+            font-size: 20px;
+            font-weight: bold;
         }
 
         .checkout-btn {
             width: 100%;
-
-            border: none;
-
-            background: #2563eb;
+            background: #16a34a;
             color: white;
-
-            padding: 14px;
-
-            margin-top: 20px;
-
+            border: none;
+            padding: 13px;
             border-radius: 7px;
-
             font-size: 16px;
-            font-weight: bold;
-
             cursor: pointer;
+            margin-top: 15px;
         }
 
         .checkout-btn:hover {
-            background: #1d4ed8;
+            background: #15803d;
         }
 
-        .empty-cart {
-            text-align: center;
+        /* RESPONSIVE */
 
-            padding: 50px;
-
-            color: #64748b;
-
-            font-size: 18px;
-        }
-
-        .quantity-form {
-            display: inline;
-        }
-
-        @media (max-width: 768px) {
+        @media (max-width: 700px) {
 
             .navbar {
-                padding: 0 20px;
+                padding: 15px 20px;
             }
 
-            .nav-links {
-                gap: 12px;
-            }
-
-            .nav-links a {
-                font-size: 13px;
-            }
-
-            .cart-container {
-                width: 95%;
-                margin: 30px auto;
-            }
-
-            .cart-content {
-                padding: 20px;
+            .container {
+                width: 94%;
             }
 
             .cart-item {
-                flex-wrap: wrap;
+                flex-direction: column;
+                align-items: flex-start;
             }
 
-            .product-info {
-                min-width: 100%;
-            }
-
-            .price {
+            .item-total {
                 text-align: left;
             }
 
+            .summary {
+                max-width: 100%;
+            }
         }
 
     </style>
 
 </head>
 
-
 <body>
 
+<!-- NAVBAR -->
 
-<nav class="navbar">
+<div class="navbar">
 
     <div class="logo">
-
-        🎓 Campus<span>Mart</span>
-
+        CampusMart
     </div>
-
 
     <div class="nav-links">
 
-        <a href="index.jsp">
-            Home
-        </a>
+        <a href="index.jsp">Home</a>
 
-        <a href="products">
-            Products
-        </a>
+        <a href="products">Products</a>
 
-        <a href="cart">
-            🛒 Cart
-        </a>
+        <a href="products">Categories</a>
 
-        <a href="my-orders">
-            📦 My Orders
-        </a>
+        <a href="cart.jsp">Cart</a>
 
-        <a href="login.jsp"
-           class="login-btn">
+        <a href="my-orders.jsp">My Orders</a>
 
-            Login
-
-        </a>
-
-    </div>
-
-</nav>
-
-
-<div class="cart-container">
-
-
-    <div class="cart-title">
-
-        <h1>
-            🛒 Your Cart
-        </h1>
-
-        <p>
-            Review your selected campus essentials
-        </p>
-
-    </div>
-
-
-    <div class="cart-content">
-
-
-        <%
-
-            List<String> cart =
-                    (List<String>) session.getAttribute("cart");
-
-
-            if (cart == null || cart.isEmpty()) {
-
-        %>
-
-
-            <div class="empty-cart">
-
-                Your cart is empty 🛒
-
-            </div>
-
-
-        <%
-
-            } else {
-
-
-                /*
-                 * Store quantity of each product.
-                 */
-
-                Map<String, Integer> quantityMap =
-                        new HashMap<>();
-
-
-                /*
-                 * Store complete product information.
-                 */
-
-                Map<String, String> productMap =
-                        new HashMap<>();
-
-
-                for (String product : cart) {
-
-
-                    String[] details =
-                            product.split("\\|", -1);
-
-
-                    if (details.length >= 3) {
-
-
-                        String productName =
-                                details[0];
-
-
-                        productMap.put(
-                                productName,
-                                product
-                        );
-
-
-                        quantityMap.put(
-                                productName,
-                                quantityMap.getOrDefault(
-                                        productName,
-                                        0
-                                ) + 1
-                        );
-
-                    }
-
-                }
-
-
-                /*
-                 * Display each unique product.
-                 */
-
-                for (String productName :
-                        quantityMap.keySet()) {
-
-
-                    String product =
-                            productMap.get(productName);
-
-
-                    String[] details =
-                            product.split("\\|", -1);
-
-
-                    String name =
-                            details[0];
-
-
-                    String category =
-                            details.length > 1
-                                    ? details[1]
-                                    : "";
-
-
-                    double price =
-                            details.length > 2
-                                    ? Double.parseDouble(
-                                            details[2])
-                                    : 0;
-
-
-                    String icon =
-                            details.length > 3
-                                    ? details[3]
-                                    : "";
-
-
-                    int quantity =
-                            quantityMap.get(productName);
-
-
-                    double itemTotal =
-                            price * quantity;
-
-        %>
-
-
-            <div class="cart-item">
-
-
-                <!-- PRODUCT INFORMATION -->
-
-                <div class="product-info">
-
-
-                    <!-- EMOJI -->
-
-                    <div class="product-icon">
-
-                        <%= icon %>
-
-                    </div>
-
-
-                    <div>
-
-                        <h3>
-
-                            <%= name %>
-
-                        </h3>
-
-
-                        <p>
-
-                            <%= category %>
-
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <!-- QUANTITY -->
-
-                <div class="quantity">
-
-
-                    <!-- DECREASE -->
-
-                    <form action="cart"
-                          method="get"
-                          class="quantity-form">
-
-
-                        <input type="hidden"
-                               name="action"
-                               value="change">
-
-
-                        <input type="hidden"
-                               name="productName"
-                               value="<%= name %>">
-
-
-                        <input type="hidden"
-                               name="change"
-                               value="-1">
-
-
-                        <button type="submit">
-
-                            −
-
-                        </button>
-
-
-                    </form>
-
-
-                    <span class="quantity-value">
-
-                        <%= quantity %>
-
-                    </span>
-
-
-                    <!-- INCREASE -->
-
-                    <form action="cart"
-                          method="get"
-                          class="quantity-form">
-
-
-                        <input type="hidden"
-                               name="action"
-                               value="change">
-
-
-                        <input type="hidden"
-                               name="productName"
-                               value="<%= name %>">
-
-
-                        <input type="hidden"
-                               name="change"
-                               value="1">
-
-
-                        <button type="submit">
-
-                            +
-
-                        </button>
-
-
-                    </form>
-
-
-                </div>
-
-
-                <!-- PRICE -->
-
-                <div class="price">
-
-                    ₹<%= String.format(
-                            "%.0f",
-                            itemTotal
-                        ) %>
-
-                </div>
-
-
-                <!-- REMOVE -->
-
-                <button type="button"
-                        class="remove-btn"
-                        onclick="removeItem(
-                            '<%= name %>'
-                        )">
-
-                    Remove
-
-                </button>
-
-
-            </div>
-
-
-        <%
-
-                }
-
-
-        %>
-
-
-            <!-- CART SUMMARY -->
-
-            <div class="cart-summary">
-
-
-                <div class="summary-box">
-
-
-                    <!-- SUBTOTAL -->
-
-                    <div class="summary-row">
-
-                        <span>
-                            Subtotal
-                        </span>
-
-
-                        <strong>
-
-                            ₹<%
-
-                                double subtotal = 0;
-
-
-                                for (String product :
-                                        cart) {
-
-
-                                    String[] details =
-                                            product.split(
-                                                "\\|",
-                                                -1
-                                            );
-
-
-                                    if (details.length >= 3) {
-
-                                        subtotal +=
-                                            Double.parseDouble(
-                                                details[2]
-                                            );
-
-                                    }
-
-                                }
-
-
-                                out.print(
-                                    String.format(
-                                        "%.0f",
-                                        subtotal
-                                    )
-                                );
-
-                            %>
-
-                        </strong>
-
-                    </div>
-
-
-                    <!-- DELIVERY -->
-
-                    <div class="summary-row">
-
-                        <span>
-                            Delivery
-                        </span>
-
-
-                        <strong>
-                            ₹0
-                        </strong>
-
-                    </div>
-
-
-                    <!-- TOTAL -->
-
-                    <div class="summary-row total">
-
-                        <span>
-                            Total
-                        </span>
-
-
-                        <strong>
-
-                            ₹<%
-
-                                double total = 0;
-
-
-                                for (String product :
-                                        cart) {
-
-
-                                    String[] details =
-                                            product.split(
-                                                "\\|",
-                                                -1
-                                            );
-
-
-                                    if (details.length >= 3) {
-
-                                        total +=
-                                            Double.parseDouble(
-                                                details[2]
-                                            );
-
-                                    }
-
-                                }
-
-
-                                out.print(
-                                    String.format(
-                                        "%.0f",
-                                        total
-                                    )
-                                );
-
-                            %>
-
-                        </strong>
-
-                    </div>
-
-
-                    <!-- CHECKOUT -->
-
-                    <form action="order"
-                          method="post">
-
-
-                        <button type="submit"
-                                class="checkout-btn">
-
-                            Proceed to Checkout
-
-                        </button>
-
-
-                    </form>
-
-
-                </div>
-
-            </div>
-
-
-        <%
-
-            }
-
-        %>
-
+        <a href="logout">Logout</a>
 
     </div>
 
 </div>
 
 
+<!-- MAIN CONTENT -->
+
+<div class="container">
+
+    <h1>🛒 Your Cart</h1>
+
+    <%
+
+        List<String> cart =
+                (List<String>) session.getAttribute("cart");
+
+        boolean hasCartError = false;
+
+        Map<String, Integer> quantityMap =
+                new HashMap<>();
+
+        Map<String, String[]> productMap =
+                new HashMap<>();
+
+        double subtotal = 0.0;
+
+        int totalItems = 0;
+
+
+        /*
+         * PROCESS CART
+         */
+
+        if (cart != null && !cart.isEmpty()) {
+
+            for (String item : cart) {
+
+                try {
+
+                    if (item == null || item.trim().isEmpty()) {
+
+                        hasCartError = true;
+                        continue;
+                    }
+
+                    String[] details =
+                            item.split("\\|", -1);
+
+                    /*
+                     * A valid cart item needs:
+                     * name | category | price | icon
+                     */
+
+                    if (details.length < 3 ||
+                        details[0] == null ||
+                        details[0].trim().isEmpty()) {
+
+                        hasCartError = true;
+                        continue;
+                    }
+
+                    String productName =
+                            details[0];
+
+                    double price =
+                            Double.parseDouble(details[2]);
+
+                    /*
+                     * Invalid price
+                     */
+
+                    if (price < 0) {
+
+                        hasCartError = true;
+                        continue;
+                    }
+
+                    /*
+                     * Store product information
+                     */
+
+                    productMap.put(
+                            productName,
+                            details
+                    );
+
+                    /*
+                     * Increase quantity
+                     */
+
+                    int quantity =
+                            quantityMap.getOrDefault(
+                                    productName,
+                                    0
+                            );
+
+                    quantityMap.put(
+                            productName,
+                            quantity + 1
+                    );
+
+                    /*
+                     * Calculate totals
+                     */
+
+                    subtotal += price;
+
+                    totalItems++;
+
+                } catch (Exception e) {
+
+                    /*
+                     * Ignore malformed cart item
+                     * instead of crashing the page.
+                     */
+
+                    hasCartError = true;
+                }
+            }
+        }
+
+    %>
+
+
+    <!-- CART WARNING -->
+
+    <% if (hasCartError) { %>
+
+        <div class="error-message">
+
+            Some items in your cart could not be displayed.
+            Please remove them and add the products again.
+
+        </div>
+
+    <% } %>
+
+
+    <%
+
+        if (quantityMap.isEmpty()) {
+
+    %>
+
+        <!-- EMPTY CART -->
+
+        <div class="empty-cart">
+
+            <p>
+                Your cart is empty 🛒
+            </p>
+
+            <a href="products" class="shop-btn">
+                Continue Shopping
+            </a>
+
+        </div>
+
+
+    <%
+
+        } else {
+
+            /*
+             * DISPLAY PRODUCTS
+             */
+
+            for (String productName :
+                    quantityMap.keySet()) {
+
+                String[] details =
+                        productMap.get(productName);
+
+                int quantity =
+                        quantityMap.get(productName);
+
+                String category =
+                        details.length > 1
+                        ? details[1]
+                        : "";
+
+                double price = 0.0;
+
+                try {
+
+                    price =
+                            Double.parseDouble(details[2]);
+
+                } catch (Exception e) {
+
+                    continue;
+                }
+
+                String icon =
+                        details.length > 3
+                        ? details[3]
+                        : "🛍️";
+
+                double itemTotal =
+                        price * quantity;
+
+    %>
+
+
+        <!-- CART ITEM -->
+
+        <div class="cart-item">
+
+
+            <!-- PRODUCT INFO -->
+
+            <div class="product-info">
+
+                <div class="product-icon">
+
+                    <%= icon %>
+
+                </div>
+
+
+                <div>
+
+                    <div class="product-name">
+
+                        <%= productName %>
+
+                    </div>
+
+
+                    <div class="product-category">
+
+                        <%= category %>
+
+                    </div>
+
+
+                    <div class="product-price">
+
+                        ₹<%= String.format("%.2f", price) %>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- QUANTITY -->
+
+            <div class="quantity-section">
+
+
+                <!-- DECREASE -->
+
+                <form action="cart"
+                      method="get"
+                      style="display:inline;">
+
+                    <input type="hidden"
+                           name="action"
+                           value="change">
+
+                    <input type="hidden"
+                           name="productName"
+                           value="<%= productName %>">
+
+                    <input type="hidden"
+                           name="change"
+                           value="-1">
+
+                    <button type="submit"
+                            class="quantity-btn">
+
+                        −
+
+                    </button>
+
+                </form>
+
+
+                <span class="quantity">
+
+                    <%= quantity %>
+
+                </span>
+
+
+                <!-- INCREASE -->
+
+                <form action="cart"
+                      method="get"
+                      style="display:inline;">
+
+                    <input type="hidden"
+                           name="action"
+                           value="change">
+
+                    <input type="hidden"
+                           name="productName"
+                           value="<%= productName %>">
+
+                    <input type="hidden"
+                           name="change"
+                           value="1">
+
+                    <button type="submit"
+                            class="quantity-btn">
+
+                        +
+
+                    </button>
+
+                </form>
+
+            </div>
+
+
+            <!-- ITEM TOTAL -->
+
+            <div class="item-total">
+
+                ₹<%= String.format("%.2f", itemTotal) %>
+
+            </div>
+
+
+            <!-- REMOVE -->
+
+            <button type="button"
+                    class="remove-btn"
+                    onclick="removeItem('<%= productName %>')">
+
+                Remove
+
+            </button>
+
+        </div>
+
+
+    <%
+
+            }
+
+    %>
+
+
+        <!-- SUMMARY -->
+
+        <div class="summary">
+
+
+            <div class="summary-row">
+
+                <span>
+                    Items
+                </span>
+
+                <span>
+                    <%= totalItems %>
+                </span>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>
+                    Subtotal
+                </span>
+
+                <span>
+                    ₹<%= String.format("%.2f", subtotal) %>
+                </span>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>
+                    Delivery
+                </span>
+
+                <span>
+                    Free
+                </span>
+
+            </div>
+
+
+            <div class="summary-row total-row">
+
+                <span>
+                    Total
+                </span>
+
+                <span>
+                    ₹<%= String.format("%.2f", subtotal) %>
+                </span>
+
+            </div>
+
+
+            <!-- CHECKOUT -->
+
+            <form action="order"
+                  method="post">
+
+                <button type="submit"
+                        class="checkout-btn">
+
+                    Proceed to Checkout
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+    <%
+
+        }
+
+    %>
+
+</div>
+
+
+<!-- JAVASCRIPT -->
+
 <script>
 
     function removeItem(productName) {
 
-        window.location.href =
-            "remove-cart?name=" +
-            encodeURIComponent(productName);
+        if (confirm("Remove this item from your cart?")) {
+
+            window.location.href =
+                "remove-cart?name=" +
+                encodeURIComponent(productName);
+
+        }
 
     }
 
@@ -808,5 +749,4 @@
 
 
 </body>
-
 </html>

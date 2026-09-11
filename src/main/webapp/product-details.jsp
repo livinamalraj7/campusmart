@@ -18,6 +18,7 @@
     <title><%= product.getName() %> | CampusMart</title>
 
     <style>
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -29,6 +30,8 @@
             background-color: #f5f7fb;
             color: #222;
         }
+
+        /* NAVBAR */
 
         .navbar {
             background-color: #1e3a8a;
@@ -50,11 +53,19 @@
             font-size: 15px;
         }
 
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        /* MAIN CONTAINER */
+
         .container {
             max-width: 1000px;
             margin: 50px auto;
             padding: 20px;
         }
+
+        /* PRODUCT DETAILS */
 
         .product-details {
             background: white;
@@ -64,6 +75,8 @@
             gap: 45px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         }
+
+        /* PRODUCT VISUAL */
 
         .product-image {
             width: 350px;
@@ -77,16 +90,17 @@
             overflow: hidden;
         }
 
-        .product-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
+        .product-icon {
+            font-size: 150px;
+            line-height: 1;
         }
 
         .no-image {
             color: #777;
             font-size: 18px;
         }
+
+        /* PRODUCT INFORMATION */
 
         .product-info {
             flex: 1;
@@ -122,9 +136,12 @@
             margin-bottom: 30px;
         }
 
+        /* BUTTONS */
+
         .buttons {
             display: flex;
             gap: 15px;
+            flex-wrap: wrap;
         }
 
         .btn {
@@ -154,6 +171,8 @@
             background-color: #d1d5db;
         }
 
+        /* MOBILE */
+
         @media (max-width: 768px) {
 
             .product-details {
@@ -165,6 +184,10 @@
                 height: 300px;
             }
 
+            .product-icon {
+                font-size: 120px;
+            }
+
             .navbar {
                 padding: 15px 20px;
             }
@@ -172,46 +195,68 @@
             .container {
                 margin: 20px auto;
             }
+
+            .product-info h2 {
+                font-size: 26px;
+            }
+
         }
+
     </style>
 
 </head>
 
 <body>
 
+    <!-- NAVBAR -->
+
     <div class="navbar">
 
         <h1>CampusMart</h1>
 
         <div>
+
             <a href="index.jsp">Home</a>
+
             <a href="products">Products</a>
-            <a href="cart">Cart</a>
+
+            <a href="cart.jsp">Cart</a>
+
         </div>
 
     </div>
 
 
+    <!-- MAIN -->
+
     <div class="container">
 
         <div class="product-details">
+
+
+            <!-- PRODUCT ICON -->
 
             <div class="product-image">
 
                 <%
                     if (product.getImage() != null &&
-                        !product.getImage().isEmpty()) {
+                        !product.getImage().trim().isEmpty()) {
                 %>
 
-                    <img src="<%= product.getImage() %>"
-                         alt="<%= product.getName() %>">
+                    <div class="product-icon">
+
+                        <%= product.getImage() %>
+
+                    </div>
 
                 <%
                     } else {
                 %>
 
                     <div class="no-image">
+
                         No Image Available
+
                     </div>
 
                 <%
@@ -221,35 +266,59 @@
             </div>
 
 
+            <!-- PRODUCT INFORMATION -->
+
             <div class="product-info">
 
                 <h2>
+
                     <%= product.getName() %>
+
                 </h2>
 
+
                 <span class="category">
+
                     <%= product.getCategory() %>
+
                 </span>
 
+
                 <div class="price">
-                    &#8377;<%= String.format("%.2f", product.getPrice()) %>
+
+                    &#8377;<%= String.format("%.2f",
+                            product.getPrice()) %>
+
                 </div>
 
+
                 <div class="description">
+
                     <%= product.getDescription() %>
+
                 </div>
 
 
                 <div class="buttons">
 
+
+                    <!-- ADD TO CART -->
+
                     <a href="cart?name=<%= java.net.URLEncoder.encode(product.getName(), "UTF-8") %>&category=<%= java.net.URLEncoder.encode(product.getCategory(), "UTF-8") %>&price=<%= product.getPrice() %>&icon=<%= java.net.URLEncoder.encode(product.getImage() == null ? "" : product.getImage(), "UTF-8") %>"
                        class="btn cart-btn">
+
                         Add to Cart
+
                     </a>
+
+
+                    <!-- BACK -->
 
                     <a href="products"
                        class="btn back-btn">
+
                         &#8592; Back to Products
+
                     </a>
 
                 </div>

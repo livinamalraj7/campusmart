@@ -1,259 +1,257 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Register | CampusMart</title>
+    <title>Register - CampusMart</title>
 
     <style>
-
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
             font-family: Arial, sans-serif;
         }
 
         body {
+            background: #f5f7fb;
             min-height: 100vh;
-            background: #f1f5f9;
-            color: #172554;
         }
 
-        /* NAVBAR */
-
+        /* Navbar */
         .navbar {
-            height: 70px;
-            background: #172554;
-
+            background: #111827;
+            color: white;
+            padding: 16px 40px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
-
-            padding: 0 7%;
+            align-items: center;
         }
 
         .logo {
-            color: white;
-            font-size: 27px;
+            font-size: 24px;
             font-weight: bold;
         }
 
-        .logo span {
-            color: #60a5fa;
-        }
-
-        .home-link {
+        .back-home {
             color: white;
             text-decoration: none;
-            font-size: 15px;
+            font-size: 14px;
         }
 
-        .home-link:hover {
-            color: #93c5fd;
+        .back-home:hover {
+            text-decoration: underline;
         }
 
-        /* REGISTER AREA */
-
-        .register-container {
-            min-height: calc(100vh - 70px);
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            padding: 40px 20px;
+        /* Register Container */
+        .container {
+            width: 100%;
+            max-width: 500px;
+            margin: 40px auto;
+            padding: 0 20px;
         }
 
-        .register-card {
-            width: 460px;
-            max-width: 100%;
-
+        .register-box {
             background: white;
-
-            padding: 35px;
-
-            border-radius: 14px;
-
-            box-shadow:
-                0 8px 30px rgba(0, 0, 0, 0.10);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         }
 
-        .register-card h1 {
+        h2 {
             text-align: center;
-            font-size: 32px;
             margin-bottom: 8px;
+            color: #111827;
         }
 
         .subtitle {
             text-align: center;
-            color: #64748b;
-            margin-bottom: 28px;
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 25px;
         }
 
-        /* FORM */
+        /* Error Message */
+        .error-message {
+            background: #fee2e2;
+            color: #b91c1c;
+            border: 1px solid #fecaca;
+            padding: 10px;
+            border-radius: 7px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
 
+        /* Success Message */
+        .success-message {
+            background: #dcfce7;
+            color: #15803d;
+            border: 1px solid #bbf7d0;
+            padding: 10px;
+            border-radius: 7px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* Form */
         .form-group {
             margin-bottom: 18px;
         }
 
-        .form-group label {
+        label {
             display: block;
-
             margin-bottom: 7px;
-
-            color: #334155;
-
-            font-weight: bold;
+            color: #374151;
             font-size: 14px;
+            font-weight: bold;
         }
 
-        .form-group input,
-        .form-group select {
-
+        input,
+        select {
             width: 100%;
-
-            padding: 12px 13px;
-
-            border: 1px solid #cbd5e1;
-
+            padding: 11px;
+            border: 1px solid #d1d5db;
             border-radius: 7px;
-
-            font-size: 15px;
-
-            background: white;
-
+            font-size: 14px;
             outline: none;
         }
 
-        .form-group input:focus,
-        .form-group select:focus {
+        input:focus,
+        select:focus {
             border-color: #2563eb;
-
-            box-shadow:
-                0 0 0 3px rgba(37, 99, 235, 0.10);
         }
 
-        /* REGISTER BUTTON */
+        .required {
+            color: #dc2626;
+        }
 
         .register-btn {
-
             width: 100%;
-
-            padding: 13px;
-
-            margin-top: 5px;
-
+            padding: 12px;
             background: #2563eb;
-
             color: white;
-
             border: none;
-
             border-radius: 7px;
-
             font-size: 16px;
-
             font-weight: bold;
-
             cursor: pointer;
+            margin-top: 5px;
         }
 
         .register-btn:hover {
             background: #1d4ed8;
         }
 
-        /* LOGIN */
-
-        .login-text {
+        .login-link {
             text-align: center;
-
-            margin-top: 22px;
-
-            color: #64748b;
-
+            margin-top: 20px;
             font-size: 14px;
+            color: #6b7280;
         }
 
-        .login-text a {
+        .login-link a {
             color: #2563eb;
-
             text-decoration: none;
-
             font-weight: bold;
         }
 
-        .login-text a:hover {
+        .login-link a:hover {
             text-decoration: underline;
         }
 
-        /* MOBILE */
-
-        @media (max-width: 500px) {
-
-            .navbar {
-                padding: 0 5%;
-            }
-
-            .register-card {
-                padding: 25px;
-            }
-
-            .register-card h1 {
-                font-size: 27px;
-            }
+        .hint {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 5px;
         }
-
     </style>
-
 </head>
-
 
 <body>
 
-    <!-- NAVBAR -->
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">CampusMart</div>
 
-    <nav class="navbar">
-
-        <div class="logo">
-            🎓 Campus<span>Mart</span>
-        </div>
-
-        <a href="index.jsp" class="home-link">
+        <a href="index.jsp" class="back-home">
             ← Back to Home
         </a>
+    </div>
 
-    </nav>
 
+    <!-- Register Section -->
+    <div class="container">
 
-    <!-- REGISTER -->
+        <div class="register-box">
 
-    <main class="register-container">
-
-        <div class="register-card">
-
-            <h1>Create Account</h1>
+            <h2>Create Account</h2>
 
             <p class="subtitle">
-                Join the CampusMart community
+                Join CampusMart and start shopping
             </p>
 
 
-            <!-- IMPORTANT: THE FORM STARTS HERE -->
+            <!-- Validation / Success Messages -->
+
+            <%
+                String error = request.getParameter("error");
+                String success = request.getParameter("success");
+            %>
+
+            <% if ("empty".equals(error)) { %>
+
+                <div class="error-message">
+                    Please fill in all the required fields.
+                </div>
+
+            <% } else if ("password".equals(error)) { %>
+
+                <div class="error-message">
+                    Password must contain at least 6 characters.
+                </div>
+
+            <% } else if ("mismatch".equals(error)) { %>
+
+                <div class="error-message">
+                    Passwords do not match. Please try again.
+                </div>
+
+            <% } else if ("duplicate".equals(error)) { %>
+
+                <div class="error-message">
+                    Email or phone number is already registered.
+                </div>
+
+            <% } else if ("server".equals(error)) { %>
+
+                <div class="error-message">
+                    Something went wrong. Please try again later.
+                </div>
+
+            <% } else if ("registered".equals(success)) { %>
+
+                <div class="success-message">
+                    Registration successful! You can now login.
+                </div>
+
+            <% } %>
+
+
+            <!-- Registration Form -->
 
             <form action="register" method="post">
 
-
-                <!-- FULL NAME -->
-
+                <!-- Name -->
                 <div class="form-group">
 
                     <label for="name">
-                        Full Name
+                        Full Name <span class="required">*</span>
                     </label>
 
                     <input
@@ -266,12 +264,11 @@
                 </div>
 
 
-                <!-- EMAIL -->
-
+                <!-- Email -->
                 <div class="form-group">
 
                     <label for="email">
-                        Email
+                        Email <span class="required">*</span>
                     </label>
 
                     <input
@@ -284,41 +281,44 @@
                 </div>
 
 
-                <!-- PHONE -->
-
+                <!-- Phone -->
                 <div class="form-group">
 
                     <label for="phone">
-                        Phone Number
+                        Phone Number <span class="required">*</span>
                     </label>
 
                     <input
                         type="tel"
                         id="phone"
                         name="phone"
-                        placeholder="Enter your phone number"
+                        placeholder="Enter 10-digit phone number"
                         pattern="[0-9]{10}"
                         maxlength="10"
                         required>
 
+                    <div class="hint">
+                        Enter exactly 10 digits.
+                    </div>
+
                 </div>
 
 
-                <!-- ACCOUNT TYPE -->
-
+                <!-- Role -->
                 <div class="form-group">
 
                     <label for="role">
-                        Account Type
+                        Account Type <span class="required">*</span>
                     </label>
 
-                    <select
-                        id="role"
-                        name="role"
-                        required>
+                    <select id="role" name="role" required>
+
+                        <option value="">
+                            Select account type
+                        </option>
 
                         <option value="customer">
-                            Student / Customer
+                            Customer
                         </option>
 
                         <option value="seller">
@@ -330,61 +330,59 @@
                 </div>
 
 
-                <!-- PASSWORD -->
-
+                <!-- Password -->
                 <div class="form-group">
 
                     <label for="password">
-                        Password
+                        Password <span class="required">*</span>
                     </label>
 
                     <input
                         type="password"
                         id="password"
                         name="password"
-                        placeholder="Create a password"
+                        placeholder="Enter your password"
                         minlength="6"
                         required>
+
+                    <div class="hint">
+                        Password must contain at least 6 characters.
+                    </div>
 
                 </div>
 
 
-                <!-- CONFIRM PASSWORD -->
-
+                <!-- Confirm Password -->
                 <div class="form-group">
 
                     <label for="confirmPassword">
-                        Confirm Password
+                        Confirm Password <span class="required">*</span>
                     </label>
 
                     <input
                         type="password"
                         id="confirmPassword"
                         name="confirmPassword"
-                        placeholder="Confirm your password"
+                        placeholder="Re-enter your password"
                         minlength="6"
                         required>
 
                 </div>
 
 
-                <!-- SUBMIT BUTTON -->
-
+                <!-- Register Button -->
                 <button
                     type="submit"
                     class="register-btn">
-
                     Create Account
-
                 </button>
-
 
             </form>
 
-            <!-- FORM ENDS HERE -->
 
+            <!-- Login Link -->
 
-            <p class="login-text">
+            <div class="login-link">
 
                 Already have an account?
 
@@ -392,12 +390,11 @@
                     Login here
                 </a>
 
-            </p>
+            </div>
 
         </div>
 
-    </main>
+    </div>
 
 </body>
-
 </html>

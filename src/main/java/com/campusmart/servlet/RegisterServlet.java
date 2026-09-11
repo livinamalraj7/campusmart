@@ -3,6 +3,7 @@ package com.campusmart.servlet;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,9 +27,27 @@ public class RegisterServlet extends HttpServlet {
         String confirmPassword =
                 request.getParameter("confirmPassword");
 
-        // Check passwords
+        // Check required values
+        if (name == null || name.trim().isEmpty() ||
+            email == null || email.trim().isEmpty() ||
+            phone == null || phone.trim().isEmpty() ||
+            role == null || role.trim().isEmpty() ||
+            password == null || password.isEmpty() ||
+            confirmPassword == null || confirmPassword.isEmpty()) {
+
+            response.sendRedirect("register.jsp?error=empty");
+            return;
+        }
+
+        // Check password length
+        if (password.length() < 6) {
+            response.sendRedirect("register.jsp?error=password");
+            return;
+        }
+
+        // Check password confirmation
         if (!password.equals(confirmPassword)) {
-            response.getWriter().println("Passwords do not match!");
+            response.sendRedirect("register.jsp?error=mismatch");
             return;
         }
 
@@ -42,25 +61,32 @@ public class RegisterServlet extends HttpServlet {
              PreparedStatement statement =
                      connection.prepareStatement(sql)) {
 
-            statement.setString(1, name);
-            statement.setString(2, email);
-            statement.setString(3, phone);
+            statement.setString(1, name.trim());
+            statement.setString(2, email.trim());
+            statement.setString(3, phone.trim());
             statement.setString(4, role);
             statement.setString(5, password);
 
             statement.executeUpdate();
 
-            response.getWriter().println(
-                    "Registration successful!"
-            );
+            response.sendRedirect("register.jsp?success=registered");
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+
+            // Duplicate email or phone
+            if (e.getErrorCode() == 1062) {
+                response.sendRedirect("register.jsp?error=duplicate");
+            } else {
+                response.sendRedirect("register.jsp?error=server");
+            }
 
         } catch (Exception e) {
 
             e.printStackTrace();
 
-            response.getWriter().println(
-                    "Registration failed!"
-            );
+            response.sendRedirect("register.jsp?error=server");
         }
     }
 }

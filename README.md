@@ -4,16 +4,16 @@ CampusMart is a campus-based e-commerce web application developed using Java tec
 
 ## 📌 Project Overview
 
-CampusMart allows students to browse products available on campus, add products to their cart, and manage their purchases through a simple web interface.
+CampusMart allows students to browse products available on campus, view product details, add products to their cart, and manage their orders through a simple web interface.
 
 ## 🛠️ Technologies Used
 
-- Java
+- Java 17
 - JSP
 - Servlets
 - JDBC
 - Maven
-- Apache Tomcat
+- Apache Tomcat 9
 - HTML
 - CSS
 - JavaScript
@@ -34,33 +34,50 @@ campusmart/
 
 ## ✨ Main Features
 
-- Student-friendly campus marketplace
+- Student registration and login
+- User session management
 - Product listing
+- Category-based product filtering
 - Product details
-- Add to cart
-- View cart
-- Update cart items
-- Remove cart items
-- Order management
-- User management
-- Database connectivity
+- Add products to cart
+- Increase and decrease cart quantity
+- Remove products from cart
+- Cart total calculation
+- Checkout and order placement
+- My Orders
+- Login and registration validation
+- User-friendly error messages
+- MySQL database connectivity
+
+## 🗄️ Database
+
+CampusMart uses MySQL for storing application data.
+
+Main tables include:
+
+- `users` — stores user information
+- `products` — stores product information
+- `orders` — stores order details
 
 ## 🎯 Objective
 
-The objective of CampusMart is to provide a convenient digital marketplace for students to purchase commonly required campus products through a simple web application.
+The objective of CampusMart is to provide a convenient digital marketplace for students to purchase commonly required campus products through a simple and user-friendly web application.
 
 ## 🚀 Future Enhancements
 
-- User registration and login
-- Product search and filtering
 - Online payment integration
-- Order history
 - Admin dashboard
 - Product management
-- Improved UI/UX
+- Product search
+- Order cancellation
+- Improved security
+- AI-powered FAQ/chatbot
+- Enhanced UI/UX
 
 ## 👨‍💻 Developed By
 
 **Livin Amal Raj**
 
-CampusMart — Java Capstone Project
+Computer Science Engineering Student
+
+**CampusMart — Java Capstone Project**

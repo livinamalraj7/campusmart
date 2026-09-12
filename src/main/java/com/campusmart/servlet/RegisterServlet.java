@@ -69,7 +69,8 @@ public class RegisterServlet extends HttpServlet {
 
             statement.executeUpdate();
 
-            response.sendRedirect("register.jsp?success=registered");
+            response.sendRedirect(
+                    "register.jsp?success=registered");
 
         } catch (SQLException e) {
 
@@ -77,16 +78,39 @@ public class RegisterServlet extends HttpServlet {
 
             // Duplicate email or phone
             if (e.getErrorCode() == 1062) {
-                response.sendRedirect("register.jsp?error=duplicate");
+
+                String message = e.getMessage();
+
+                if (message != null &&
+                    message.contains("email")) {
+
+                    response.sendRedirect(
+                            "register.jsp?error=emailduplicate");
+
+                } else if (message != null &&
+                           message.contains("phone")) {
+
+                    response.sendRedirect(
+                            "register.jsp?error=phoneduplicate");
+
+                } else {
+
+                    response.sendRedirect(
+                            "register.jsp?error=duplicate");
+                }
+
             } else {
-                response.sendRedirect("register.jsp?error=server");
+
+                response.sendRedirect(
+                        "register.jsp?error=server");
             }
 
         } catch (Exception e) {
 
             e.printStackTrace();
 
-            response.sendRedirect("register.jsp?error=server");
+            response.sendRedirect(
+                    "register.jsp?error=server");
         }
     }
 }

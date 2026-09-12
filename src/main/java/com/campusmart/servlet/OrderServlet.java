@@ -40,6 +40,12 @@ public class OrderServlet extends HttpServlet {
         List<String> cart =
                 (List<String>) session.getAttribute("cart");
 
+        /*
+         * Get delivery address from checkout form.
+         */
+        String deliveryAddress =
+                request.getParameter("deliveryAddress");
+
         // Check login
         if (userEmail == null || userEmail.isEmpty()) {
 
@@ -51,6 +57,27 @@ public class OrderServlet extends HttpServlet {
         if (cart == null || cart.isEmpty()) {
 
             response.sendRedirect("cart");
+            return;
+        }
+
+        /*
+         * Validate delivery address.
+         */
+        if (deliveryAddress == null ||
+            deliveryAddress.trim().isEmpty()) {
+
+            response.sendRedirect("cart.jsp?error=address");
+            return;
+        }
+
+        deliveryAddress = deliveryAddress.trim();
+
+        /*
+         * Prevent an address longer than the database column.
+         */
+        if (deliveryAddress.length() > 255) {
+
+            response.sendRedirect("cart.jsp?error=addresslength");
             return;
         }
 
@@ -110,10 +137,14 @@ public class OrderServlet extends HttpServlet {
 
             connection = DBConnection.getConnection();
 
+            /*
+             * Insert delivery address along with
+             * the order details.
+             */
             String sql =
                     "INSERT INTO orders " +
-                    "(user_email, product_name, category, price, quantity) " +
-                    "VALUES (?, ?, ?, ?, ?)";
+                    "(user_email, product_name, category, price, quantity, delivery_address) " +
+                    "VALUES (?, ?, ?, ?, ?, ?)";
 
             statement =
                     connection.prepareStatement(sql);
@@ -170,6 +201,11 @@ public class OrderServlet extends HttpServlet {
                 statement.setInt(
                         5,
                         quantity
+                );
+
+                statement.setString(
+                        6,
+                        deliveryAddress
                 );
 
                 statement.executeUpdate();

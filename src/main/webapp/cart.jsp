@@ -230,6 +230,46 @@
             font-weight: bold;
         }
 
+        /* DELIVERY ADDRESS */
+
+        .address-section {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+        }
+
+        .address-label {
+            display: block;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .address-input {
+            width: 100%;
+            min-height: 90px;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            resize: vertical;
+        }
+
+        .address-input:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .address-hint {
+            color: #666;
+            font-size: 13px;
+            margin-top: 6px;
+            margin-bottom: 0;
+        }
+
+        /* CHECKOUT */
+
         .checkout-btn {
             width: 100%;
             background: #16a34a;
@@ -703,15 +743,39 @@
             </div>
 
 
-            <!-- CHECKOUT -->
+            <!-- DELIVERY ADDRESS + CHECKOUT -->
 
             <form action="order"
                   method="post">
 
+                <div class="address-section">
+
+                    <label for="deliveryAddress"
+                           class="address-label">
+
+                        📍 Delivery Address
+
+                    </label>
+
+                    <textarea
+                        id="deliveryAddress"
+                        name="deliveryAddress"
+                        class="address-input"
+                        placeholder="Enter your complete delivery address"
+                        maxlength="255"
+                        required></textarea>
+
+                    <p class="address-hint">
+                        Please provide your complete address for delivery.
+                    </p>
+
+                </div>
+
+
                 <button type="submit"
                         class="checkout-btn">
 
-                    Proceed to Checkout
+                    Place Order
 
                 </button>
 

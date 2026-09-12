@@ -1,13 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java"
+         contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html>
+
 <head>
+
     <meta charset="UTF-8">
+
     <title>Register - CampusMart</title>
 
     <style>
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -21,6 +26,7 @@
         }
 
         /* Navbar */
+
         .navbar {
             background: #111827;
             color: white;
@@ -46,6 +52,7 @@
         }
 
         /* Register Container */
+
         .container {
             width: 100%;
             max-width: 500px;
@@ -74,6 +81,7 @@
         }
 
         /* Error Message */
+
         .error-message {
             background: #fee2e2;
             color: #b91c1c;
@@ -87,6 +95,7 @@
         }
 
         /* Success Message */
+
         .success-message {
             background: #dcfce7;
             color: #15803d;
@@ -100,6 +109,7 @@
         }
 
         /* Form */
+
         .form-group {
             margin-bottom: 18px;
         }
@@ -130,6 +140,50 @@
         .required {
             color: #dc2626;
         }
+
+        /* Password Wrapper */
+
+        .password-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .password-wrapper input {
+            width: 100%;
+            padding: 11px 45px 11px 11px;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .password-wrapper input:focus {
+            border-color: #2563eb;
+        }
+
+        /* Show / Hide Password */
+
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+
+            border: none;
+            background: transparent;
+
+            cursor: pointer;
+
+            font-size: 18px;
+
+            padding: 3px;
+        }
+
+        .toggle-password:hover {
+            opacity: 0.7;
+        }
+
+        /* Register Button */
 
         .register-btn {
             width: 100%;
@@ -170,22 +224,30 @@
             color: #6b7280;
             margin-top: 5px;
         }
+
     </style>
+
 </head>
 
 <body>
 
     <!-- Navbar -->
+
     <div class="navbar">
-        <div class="logo">CampusMart</div>
+
+        <div class="logo">
+            CampusMart
+        </div>
 
         <a href="index.jsp" class="back-home">
             ← Back to Home
         </a>
+
     </div>
 
 
     <!-- Register Section -->
+
     <div class="container">
 
         <div class="register-box">
@@ -222,6 +284,20 @@
                     Passwords do not match. Please try again.
                 </div>
 
+            <% } else if ("emailduplicate".equals(error)) { %>
+
+                <div class="error-message">
+                    This email is already registered.
+                    Please use a different email.
+                </div>
+
+            <% } else if ("phoneduplicate".equals(error)) { %>
+
+                <div class="error-message">
+                    This phone number is already registered.
+                    Please use a different phone number.
+                </div>
+
             <% } else if ("duplicate".equals(error)) { %>
 
                 <div class="error-message">
@@ -247,7 +323,9 @@
 
             <form action="register" method="post">
 
+
                 <!-- Name -->
+
                 <div class="form-group">
 
                     <label for="name">
@@ -265,6 +343,7 @@
 
 
                 <!-- Email -->
+
                 <div class="form-group">
 
                     <label for="email">
@@ -282,6 +361,7 @@
 
 
                 <!-- Phone -->
+
                 <div class="form-group">
 
                     <label for="phone">
@@ -305,13 +385,17 @@
 
 
                 <!-- Role -->
+
                 <div class="form-group">
 
                     <label for="role">
                         Account Type <span class="required">*</span>
                     </label>
 
-                    <select id="role" name="role" required>
+                    <select
+                        id="role"
+                        name="role"
+                        required>
 
                         <option value="">
                             Select account type
@@ -331,19 +415,35 @@
 
 
                 <!-- Password -->
+
                 <div class="form-group">
 
                     <label for="password">
                         Password <span class="required">*</span>
                     </label>
 
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        placeholder="Enter your password"
-                        minlength="6"
-                        required>
+                    <div class="password-wrapper">
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            minlength="6"
+                            required>
+
+                        <button
+                            type="button"
+                            class="toggle-password"
+                            id="togglePassword"
+                            onclick="togglePasswordVisibility('password', 'togglePassword')"
+                            aria-label="Show password">
+
+                            👁️
+
+                        </button>
+
+                    </div>
 
                     <div class="hint">
                         Password must contain at least 6 characters.
@@ -353,28 +453,47 @@
 
 
                 <!-- Confirm Password -->
+
                 <div class="form-group">
 
                     <label for="confirmPassword">
                         Confirm Password <span class="required">*</span>
                     </label>
 
-                    <input
-                        type="password"
-                        id="confirmPassword"
-                        name="confirmPassword"
-                        placeholder="Re-enter your password"
-                        minlength="6"
-                        required>
+                    <div class="password-wrapper">
+
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            placeholder="Re-enter your password"
+                            minlength="6"
+                            required>
+
+                        <button
+                            type="button"
+                            class="toggle-password"
+                            id="toggleConfirmPassword"
+                            onclick="togglePasswordVisibility('confirmPassword', 'toggleConfirmPassword')"
+                            aria-label="Show password">
+
+                            👁️
+
+                        </button>
+
+                    </div>
 
                 </div>
 
 
                 <!-- Register Button -->
+
                 <button
                     type="submit"
                     class="register-btn">
+
                     Create Account
+
                 </button>
 
             </form>
@@ -396,5 +515,49 @@
 
     </div>
 
+
+    <script>
+
+        function togglePasswordVisibility(
+            passwordId,
+            buttonId
+        ) {
+
+            const passwordInput =
+                document.getElementById(passwordId);
+
+            const toggleButton =
+                document.getElementById(buttonId);
+
+
+            if (passwordInput.type === "password") {
+
+                passwordInput.type = "text";
+
+                toggleButton.textContent = "🙈";
+
+                toggleButton.setAttribute(
+                    "aria-label",
+                    "Hide password"
+                );
+
+            } else {
+
+                passwordInput.type = "password";
+
+                toggleButton.textContent = "👁️";
+
+                toggleButton.setAttribute(
+                    "aria-label",
+                    "Show password"
+                );
+
+            }
+
+        }
+
+    </script>
+
 </body>
+
 </html>

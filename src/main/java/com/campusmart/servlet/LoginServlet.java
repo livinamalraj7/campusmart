@@ -43,25 +43,59 @@ public class LoginServlet extends HttpServlet {
 
                 HttpSession session = request.getSession();
 
-                session.setAttribute("userId", result.getInt("id"));
-                session.setAttribute("userName", result.getString("name"));
-                session.setAttribute("userEmail", result.getString("email"));
-                session.setAttribute("userRole", result.getString("role"));
+                session.setAttribute(
+                        "userId",
+                        result.getInt("id")
+                );
 
-                response.sendRedirect("index.jsp");
+                session.setAttribute(
+                        "userName",
+                        result.getString("name")
+                );
+
+                session.setAttribute(
+                        "userEmail",
+                        result.getString("email")
+                );
+
+                session.setAttribute(
+                        "userRole",
+                        result.getString("role")
+                );
+
+                String role = result.getString("role");
+
+                /*
+                 * Redirect user based on account type.
+                 */
+
+                if ("seller".equalsIgnoreCase(role)) {
+
+                    response.sendRedirect(
+                            "seller-dashboard.jsp"
+                    );
+
+                } else {
+
+                    response.sendRedirect(
+                            "index.jsp"
+                    );
+                }
 
             } else {
 
-                response.sendRedirect("login.jsp?error=invalid");
-
+                response.sendRedirect(
+                        "login.jsp?error=invalid"
+                );
             }
 
         } catch (Exception e) {
 
             e.printStackTrace();
 
-            response.sendRedirect("login.jsp?error=server");
-
+            response.sendRedirect(
+                    "login.jsp?error=server"
+            );
         }
     }
 }

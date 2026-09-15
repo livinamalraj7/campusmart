@@ -19,63 +19,141 @@ public class ProductDAO {
 
         try (
             Connection connection = DBConnection.getConnection();
-            PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet resultSet = statement.executeQuery()
+            PreparedStatement statement =
+                    connection.prepareStatement(sql);
+            ResultSet resultSet =
+                    statement.executeQuery()
         ) {
 
             while (resultSet.next()) {
 
                 Product product = new Product();
 
-                product.setId(resultSet.getInt("id"));
-                product.setName(resultSet.getString("name"));
-                product.setCategory(resultSet.getString("category"));
-                product.setPrice(resultSet.getDouble("price"));
-                product.setDescription(resultSet.getString("description"));
-                product.setImage(resultSet.getString("image"));
+                product.setId(
+                        resultSet.getInt("id")
+                );
+
+                product.setName(
+                        resultSet.getString("name")
+                );
+
+                product.setCategory(
+                        resultSet.getString("category")
+                );
+
+                product.setPrice(
+                        resultSet.getDouble("price")
+                );
+
+                product.setDescription(
+                        resultSet.getString("description")
+                );
+
+                product.setImage(
+                        resultSet.getString("image")
+                );
+
+
+                // Get seller ownership
+                int sellerId =
+                        resultSet.getInt("seller_id");
+
+                if (resultSet.wasNull()) {
+
+                    product.setSellerId(null);
+
+                } else {
+
+                    product.setSellerId(sellerId);
+                }
+
 
                 productList.add(product);
             }
 
         } catch (Exception e) {
+
             e.printStackTrace();
         }
 
         return productList;
     }
 
+
     // Get products by category
-    public List<Product> getProductsByCategory(String category) {
+    public List<Product> getProductsByCategory(
+            String category) {
 
-        List<Product> productList = new ArrayList<>();
+        List<Product> productList =
+                new ArrayList<>();
 
-        String sql = "SELECT * FROM products WHERE category = ?";
+        String sql =
+                "SELECT * FROM products WHERE category = ?";
 
         try (
-            Connection connection = DBConnection.getConnection();
-            PreparedStatement statement = connection.prepareStatement(sql)
+            Connection connection =
+                    DBConnection.getConnection();
+
+            PreparedStatement statement =
+                    connection.prepareStatement(sql)
         ) {
 
             statement.setString(1, category);
 
-            try (ResultSet resultSet = statement.executeQuery()) {
+
+            try (ResultSet resultSet =
+                    statement.executeQuery()) {
 
                 while (resultSet.next()) {
 
-                    Product product = new Product();
+                    Product product =
+                            new Product();
 
-                    product.setId(resultSet.getInt("id"));
-                    product.setName(resultSet.getString("name"));
-                    product.setCategory(resultSet.getString("category"));
-                    product.setPrice(resultSet.getDouble("price"));
-                    product.setDescription(resultSet.getString("description"));
-                    product.setImage(resultSet.getString("image"));
+                    product.setId(
+                            resultSet.getInt("id")
+                    );
+
+                    product.setName(
+                            resultSet.getString("name")
+                    );
+
+                    product.setCategory(
+                            resultSet.getString("category")
+                    );
+
+                    product.setPrice(
+                            resultSet.getDouble("price")
+                    );
+
+                    product.setDescription(
+                            resultSet.getString("description")
+                    );
+
+                    product.setImage(
+                            resultSet.getString("image")
+                    );
+
+
+                    // Get seller ownership
+                    int sellerId =
+                            resultSet.getInt("seller_id");
+
+                    if (resultSet.wasNull()) {
+
+                        product.setSellerId(null);
+
+                    } else {
+
+                        product.setSellerId(sellerId);
+                    }
+
 
                     productList.add(product);
                 }
             }
 
         } catch (Exception e) {
+
             e.printStackTrace();
         }
 

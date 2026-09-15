@@ -2,19 +2,20 @@ package com.campusmart.servlet;
 
 import com.campusmart.model.Product;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-@WebServlet("/product-details")
-public class ProductDetailsServlet extends HttpServlet {
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+@WebServlet("/edit-product")
+public class EditProductServlet extends HttpServlet {
 
     @Override
     protected void doGet(
@@ -22,48 +23,51 @@ public class ProductDetailsServlet extends HttpServlet {
             HttpServletResponse response)
             throws ServletException, IOException {
 
-        System.out.println(
-                "PRODUCT DETAILS SERVLET CALLED"
-        );
+        HttpSession session = request.getSession();
+
+        String userRole =
+                (String) session.getAttribute("userRole");
+
+        Object userIdObject =
+                session.getAttribute("userId");
+
+        // Seller-only access
+        if (userRole == null ||
+            !"seller".equalsIgnoreCase(userRole) ||
+            userIdObject == null) {
+
+            response.sendRedirect("login.jsp");
+            return;
+        }
+
+        int sellerId = (Integer) userIdObject;
 
         String idParameter =
                 request.getParameter("id");
 
-
-        // No product ID provided
         if (idParameter == null ||
             idParameter.trim().isEmpty()) {
 
-            response.sendRedirect(
-                    "products?error=invalid"
-            );
-
+            response.sendRedirect("my-products?error=invalid");
             return;
         }
 
+        int productId;
 
-        int id;
-
-        // Invalid product ID
         try {
-
-            id = Integer.parseInt(
-                    idParameter
-            );
-
+            productId =
+                    Integer.parseInt(idParameter);
         } catch (NumberFormatException e) {
 
             response.sendRedirect(
-                    "products?error=invalid"
+                    "my-products?error=invalid"
             );
-
             return;
         }
 
-
         String sql =
-                "SELECT * FROM products WHERE id = ?";
-
+                "SELECT * FROM products " +
+                "WHERE id = ? AND seller_id = ?";
 
         try (
             Connection connection =
@@ -73,8 +77,8 @@ public class ProductDetailsServlet extends HttpServlet {
                     connection.prepareStatement(sql)
         ) {
 
-            statement.setInt(1, id);
-
+            statement.setInt(1, productId);
+            statement.setInt(2, sellerId);
 
             try (ResultSet resultSet =
                     statement.executeQuery()) {
@@ -83,7 +87,6 @@ public class ProductDetailsServlet extends HttpServlet {
 
                     Product product =
                             new Product();
-
 
                     product.setId(
                             resultSet.getInt("id")
@@ -109,42 +112,27 @@ public class ProductDetailsServlet extends HttpServlet {
                             resultSet.getString("image")
                     );
 
-
-                    // Get seller ownership
-                    int sellerId =
-                            resultSet.getInt("seller_id");
-
-                    if (resultSet.wasNull()) {
-
-                        product.setSellerId(null);
-
-                    } else {
-
-                        product.setSellerId(
-                                sellerId
-                        );
-                    }
-
+                    product.setSellerId(
+                            sellerId
+                    );
 
                     request.setAttribute(
                             "product",
                             product
                     );
 
-
                     request.getRequestDispatcher(
-                            "/product-details.jsp"
+                            "/edit-product.jsp"
                     ).forward(
                             request,
                             response
                     );
 
-
                 } else {
 
-                    // Product ID does not exist
+                    // Product doesn't belong to this seller
                     response.sendRedirect(
-                            "products?error=notfound"
+                            "my-products?error=notfound"
                     );
                 }
             }
@@ -153,9 +141,8 @@ public class ProductDetailsServlet extends HttpServlet {
 
             e.printStackTrace();
 
-            // Database/server error
             response.sendRedirect(
-                    "products?error=server"
+                    "my-products?error=server"
             );
         }
     }

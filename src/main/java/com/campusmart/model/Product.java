@@ -9,11 +9,19 @@ public class Product {
     private String description;
     private String image;
 
+    // Seller who owns this product
+    // NULL for old/existing products
+    private Integer sellerId;
+
+
     public Product() {
     }
 
+
+    // Existing constructor
     public Product(int id, String name, String category,
                    double price, String description, String image) {
+
         this.id = id;
         this.name = name;
         this.category = category;
@@ -21,6 +29,9 @@ public class Product {
         this.description = description;
         this.image = image;
     }
+
+
+    // Getters and Setters
 
     public int getId() {
         return id;
@@ -30,6 +41,7 @@ public class Product {
         this.id = id;
     }
 
+
     public String getName() {
         return name;
     }
@@ -37,6 +49,7 @@ public class Product {
     public void setName(String name) {
         this.name = name;
     }
+
 
     public String getCategory() {
         return category;
@@ -46,6 +59,7 @@ public class Product {
         this.category = category;
     }
 
+
     public double getPrice() {
         return price;
     }
@@ -53,6 +67,7 @@ public class Product {
     public void setPrice(double price) {
         this.price = price;
     }
+
 
     public String getDescription() {
         return description;
@@ -62,11 +77,23 @@ public class Product {
         this.description = description;
     }
 
+
     public String getImage() {
         return image;
     }
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+
+    // Seller ownership
+
+    public Integer getSellerId() {
+        return sellerId;
+    }
+
+    public void setSellerId(Integer sellerId) {
+        this.sellerId = sellerId;
     }
 }

@@ -6,7 +6,10 @@ import java.sql.DriverManager;
 public class DBConnection {
 
     private static final String URL =
-            "jdbc:mysql://localhost:3306/campusmart";
+            "jdbc:mysql://localhost:3306/campusmart"
+            + "?useUnicode=true"
+            + "&characterEncoding=UTF-8"
+            + "&connectionCollation=utf8mb4_unicode_ci";
 
     private static final String USER =
             "root";

@@ -2,6 +2,7 @@ package com.campusmart.servlet;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
@@ -21,19 +22,17 @@ public class AddProductServlet extends HttpServlet {
             HttpServletResponse response)
             throws ServletException, IOException {
 
-        // UTF-8 support for emojis and special characters
+        // UTF-8 support
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
 
-        HttpSession session =
-                request.getSession();
+        HttpSession session = request.getSession();
 
         String userRole =
                 (String) session.getAttribute("userRole");
 
         Object userIdObject =
                 session.getAttribute("userId");
-
 
         // Only sellers can add products
         if (userRole == null ||
@@ -44,10 +43,8 @@ public class AddProductServlet extends HttpServlet {
             return;
         }
 
-
         int sellerId =
                 (Integer) userIdObject;
-
 
         String name =
                 request.getParameter("name");
@@ -63,7 +60,6 @@ public class AddProductServlet extends HttpServlet {
 
         String image =
                 request.getParameter("image");
-
 
         // Required field validation
         if (name == null ||
@@ -84,7 +80,6 @@ public class AddProductServlet extends HttpServlet {
 
             return;
         }
-
 
         BigDecimal price;
 
@@ -113,21 +108,48 @@ public class AddProductServlet extends HttpServlet {
             return;
         }
 
-
         name = name.trim();
         category = category.trim();
         description = description.trim();
 
         if (image != null) {
-            image = image.trim();
-        }
 
+            image = image.trim();
+
+            /*
+             * Repair UTF-8 mojibake.
+             *
+             * Example:
+             * Ã°ÂÂÂ  ->  📘
+             *
+             * Only attempt the repair when the text
+             * contains common mojibake characters.
+             */
+            if (image.contains("Ã") ||
+                image.contains("Â") ||
+                image.contains("â")) {
+
+                try {
+
+                    image = new String(
+                            image.getBytes(
+                                    StandardCharsets.ISO_8859_1
+                            ),
+                            StandardCharsets.UTF_8
+                    );
+
+                } catch (Exception e) {
+
+                    // Keep original value if repair fails
+                    e.printStackTrace();
+                }
+            }
+        }
 
         String sql =
                 "INSERT INTO products " +
                 "(name, category, price, description, image, seller_id) " +
                 "VALUES (?, ?, ?, ?, ?, ?)";
-
 
         try (
             Connection connection =
@@ -146,11 +168,9 @@ public class AddProductServlet extends HttpServlet {
 
             statement.executeUpdate();
 
-
             response.sendRedirect(
                     "seller-dashboard.jsp?success=productadded"
             );
-
 
         } catch (Exception e) {
 

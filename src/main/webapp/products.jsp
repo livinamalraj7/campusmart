@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.net.URLEncoder" %>
 <%@ page import="com.campusmart.model.Product" %>
@@ -113,6 +113,7 @@ body {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+
     gap: 12px;
 }
 
@@ -147,9 +148,12 @@ body {
     margin: auto;
 
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(240px, 1fr));
 
     gap: 25px;
+
     padding-bottom: 50px;
 }
 
@@ -157,9 +161,11 @@ body {
     background: white;
 
     border-radius: 12px;
+
     padding: 20px;
 
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.08);
 
     transition: transform 0.2s;
 }
@@ -168,25 +174,36 @@ body {
     transform: translateY(-5px);
 }
 
+/* PRODUCT IMAGE / EMOJI */
+
 .product-image {
     height: 150px;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
     font-size: 70px;
 
+    line-height: 1;
+
     background: #eff6ff;
+
     border-radius: 10px;
 
     margin-bottom: 18px;
+
+    overflow: hidden;
 }
+
+/* CATEGORY */
 
 .category {
     color: #2563eb;
 
     font-size: 13px;
+
     font-weight: bold;
 
     margin-bottom: 7px;
@@ -194,24 +211,33 @@ body {
     text-transform: uppercase;
 }
 
+/* PRODUCT NAME */
+
 .product-card h2 {
     font-size: 20px;
+
     margin-bottom: 8px;
 }
+
+/* DESCRIPTION */
 
 .description {
     color: #64748b;
 
     font-size: 14px;
+
     line-height: 1.5;
 
     min-height: 42px;
 }
 
+/* BOTTOM */
+
 .product-bottom {
     display: flex;
 
     align-items: center;
+
     justify-content: space-between;
 
     margin-top: 18px;
@@ -231,7 +257,9 @@ body {
 
 .button-group {
     display: flex;
+
     gap: 8px;
+
     align-items: center;
 }
 
@@ -402,7 +430,8 @@ body {
 <!-- CATEGORY FILTER -->
 
 <%
-    String selectedCategory = request.getParameter("category");
+    String selectedCategory =
+            request.getParameter("category");
 %>
 
 <div class="category-filter">
@@ -441,54 +470,109 @@ body {
 
 <%
     List<Product> products =
-        (List<Product>) request.getAttribute("products");
+            (List<Product>) request.getAttribute("products");
 
     if (products != null && !products.isEmpty()) {
 
         for (Product product : products) {
 
-            String name = URLEncoder.encode(
-                product.getName(), "UTF-8"
-            );
+            String name =
+                    URLEncoder.encode(
+                            product.getName(),
+                            "UTF-8"
+                    );
 
-            String category = URLEncoder.encode(
-                product.getCategory(), "UTF-8"
-            );
+            String category =
+                    URLEncoder.encode(
+                            product.getCategory(),
+                            "UTF-8"
+                    );
 
-            String image = URLEncoder.encode(
-                product.getImage(), "UTF-8"
-            );
+            String image = "";
 
-            String price = String.valueOf(
-                product.getPrice()
-            );
+            if (product.getImage() != null) {
+
+                image =
+                        URLEncoder.encode(
+                                product.getImage(),
+                                "UTF-8"
+                        );
+            }
+
+            String price =
+                    String.valueOf(
+                            product.getPrice()
+                    );
 %>
 
     <!-- PRODUCT CARD -->
 
     <div class="product-card">
 
+        <!-- EMOJI / IMAGE DISPLAY -->
+
         <div class="product-image">
-            <%= product.getImage() %>
+
+            <%
+                if (product.getImage() != null &&
+                    !product.getImage().trim().isEmpty()) {
+            %>
+
+                <%= product.getImage() %>
+
+            <%
+                } else {
+            %>
+
+                📦
+
+            <%
+                }
+            %>
+
         </div>
+
+
+        <!-- CATEGORY -->
 
         <div class="category">
+
             <%= product.getCategory() %>
+
         </div>
 
+
+        <!-- PRODUCT NAME -->
+
         <h2>
+
             <%= product.getName() %>
+
         </h2>
 
+
+        <!-- DESCRIPTION -->
+
         <p class="description">
+
             <%= product.getDescription() %>
+
         </p>
+
+
+        <!-- PRICE + BUTTONS -->
 
         <div class="product-bottom">
 
             <span class="price">
-                ₹<%= String.format("%.0f", product.getPrice()) %>
+
+                ₹<%= String.format(
+                        "%.0f",
+                        product.getPrice()
+                    ) %>
+
             </span>
+
 
             <div class="button-group">
 
@@ -501,6 +585,7 @@ body {
                     View Details
 
                 </a>
+
 
                 <!-- ADD TO CART -->
 

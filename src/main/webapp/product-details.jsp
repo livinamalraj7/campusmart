@@ -1,4 +1,6 @@
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="com.campusmart.model.Product" %>
+<%@ page import="java.net.URLEncoder" %>
 
 <%
     Product product = (Product) request.getAttribute("product");
@@ -7,13 +9,25 @@
         response.sendRedirect("products");
         return;
     }
+
+    String image = product.getImage();
+
+    if (image == null) {
+        image = "";
+    }
+
+    image = image.trim();
 %>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
 
     <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title><%= product.getName() %> | CampusMart</title>
 
@@ -93,6 +107,7 @@
         .product-icon {
             font-size: 150px;
             line-height: 1;
+            text-align: center;
         }
 
         .no-image {
@@ -199,7 +214,6 @@
             .product-info h2 {
                 font-size: 26px;
             }
-
         }
 
     </style>
@@ -233,20 +247,16 @@
 
         <div class="product-details">
 
-
             <!-- PRODUCT ICON -->
 
             <div class="product-image">
 
                 <%
-                    if (product.getImage() != null &&
-                        !product.getImage().trim().isEmpty()) {
+                    if (!image.isEmpty()) {
                 %>
 
                     <div class="product-icon">
-
-                        <%= product.getImage() %>
-
+                        <%= image %>
                     </div>
 
                 <%
@@ -254,9 +264,7 @@
                 %>
 
                     <div class="no-image">
-
                         No Image Available
-
                     </div>
 
                 <%
@@ -271,40 +279,34 @@
             <div class="product-info">
 
                 <h2>
-
                     <%= product.getName() %>
-
                 </h2>
 
 
                 <span class="category">
-
                     <%= product.getCategory() %>
-
                 </span>
 
 
                 <div class="price">
-
                     &#8377;<%= String.format("%.2f",
                             product.getPrice()) %>
-
                 </div>
 
 
                 <div class="description">
-
                     <%= product.getDescription() %>
-
                 </div>
 
 
                 <div class="buttons">
 
-
                     <!-- ADD TO CART -->
 
-                    <a href="cart?name=<%= java.net.URLEncoder.encode(product.getName(), "UTF-8") %>&category=<%= java.net.URLEncoder.encode(product.getCategory(), "UTF-8") %>&price=<%= product.getPrice() %>&icon=<%= java.net.URLEncoder.encode(product.getImage() == null ? "" : product.getImage(), "UTF-8") %>"
+                    <a href="cart?name=<%= URLEncoder.encode(
+                            product.getName(), "UTF-8") %>&category=<%= URLEncoder.encode(
+                            product.getCategory(), "UTF-8") %>&price=<%= product.getPrice() %>&icon=<%= URLEncoder.encode(
+                            image, "UTF-8") %>"
                        class="btn cart-btn">
 
                         Add to Cart
@@ -330,4 +332,5 @@
     </div>
 
 </body>
+
 </html>

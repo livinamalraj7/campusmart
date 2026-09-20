@@ -6,22 +6,27 @@ import java.sql.DriverManager;
 public class DBConnection {
 
     private static final String URL =
-            "jdbc:mysql://localhost:3306/campusmart"
-            + "?useUnicode=true"
-            + "&characterEncoding=UTF-8"
-            + "&connectionCollation=utf8mb4_unicode_ci";
+            System.getenv("DB_URL") != null
+                    ? System.getenv("DB_URL")
+                    : "jdbc:mysql://localhost:3306/campusmart"
+                    + "?useUnicode=true"
+                    + "&characterEncoding=UTF-8"
+                    + "&connectionCollation=utf8mb4_unicode_ci";
 
     private static final String USER =
-            "root";
+            System.getenv("DB_USER") != null
+                    ? System.getenv("DB_USER")
+                    : "root";
 
     private static final String PASSWORD =
-            "Livin@2007";
+            System.getenv("DB_PASSWORD") != null
+                    ? System.getenv("DB_PASSWORD")
+                    : "";
 
     public static Connection getConnection() {
 
         try {
 
-            // Load MySQL JDBC Driver
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             return DriverManager.getConnection(

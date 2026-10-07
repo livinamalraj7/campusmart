@@ -4,6 +4,6 @@ RUN rm -rf /usr/local/tomcat/webapps/*
 
 COPY target/campusmart.war /usr/local/tomcat/webapps/ROOT.war
 
-EXPOSE 8080
+EXPOSE 10000
 
-CMD ["catalina.sh", "run"]
+CMD ["sh", "-c", "sed -i \"s/8080/${PORT:-10000}/g\" /usr/local/tomcat/conf/server.xml && catalina.sh run"]

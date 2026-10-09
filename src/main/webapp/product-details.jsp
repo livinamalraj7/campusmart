@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="com.campusmart.model.Product" %>
-<%@ page import="java.net.URLEncoder" %>
 
 <%
     Product product = (Product) request.getAttribute("product");
@@ -17,22 +16,36 @@
     }
 
     image = image.trim();
+
+    // Fallback icons for missing or corrupted images
+    if (image.isEmpty() || image.matches("\\?+")) {
+        String category = product.getCategory();
+
+        if ("Books".equalsIgnoreCase(category)) {
+            image = "📚";
+        } else if ("Electronics".equalsIgnoreCase(category)) {
+            image = "🧮";
+        } else if ("Stationery".equalsIgnoreCase(category)) {
+            image = "📒";
+        } else if ("Lab Essentials".equalsIgnoreCase(category)) {
+            image = "🥼";
+        } else {
+            image = "📦";
+        }
+    }
 %>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
     <title><%= product.getName() %> | CampusMart</title>
 
     <style>
-
         * {
             box-sizing: border-box;
             margin: 0;
@@ -46,7 +59,6 @@
         }
 
         /* NAVBAR */
-
         .navbar {
             background-color: #1e3a8a;
             color: white;
@@ -72,7 +84,6 @@
         }
 
         /* MAIN CONTAINER */
-
         .container {
             max-width: 1000px;
             margin: 50px auto;
@@ -80,7 +91,6 @@
         }
 
         /* PRODUCT DETAILS */
-
         .product-details {
             background: white;
             border-radius: 12px;
@@ -91,7 +101,6 @@
         }
 
         /* PRODUCT VISUAL */
-
         .product-image {
             width: 350px;
             height: 350px;
@@ -116,7 +125,6 @@
         }
 
         /* PRODUCT INFORMATION */
-
         .product-info {
             flex: 1;
             padding-top: 10px;
@@ -152,7 +160,6 @@
         }
 
         /* BUTTONS */
-
         .buttons {
             display: flex;
             gap: 15px;
@@ -187,9 +194,7 @@
         }
 
         /* MOBILE */
-
         @media (max-width: 768px) {
-
             .product-details {
                 flex-direction: column;
             }
@@ -215,122 +220,71 @@
                 font-size: 26px;
             }
         }
-
     </style>
-
 </head>
 
 <body>
 
     <!-- NAVBAR -->
-
     <div class="navbar">
-
         <h1>CampusMart</h1>
 
         <div>
-
             <a href="index.jsp">Home</a>
-
             <a href="products">Products</a>
-
             <a href="cart.jsp">Cart</a>
-
         </div>
-
     </div>
 
-
     <!-- MAIN -->
-
     <div class="container">
-
         <div class="product-details">
 
             <!-- PRODUCT ICON -->
-
             <div class="product-image">
-
-                <%
-                    if (!image.isEmpty()) {
-                %>
-
-                    <div class="product-icon">
-                        <%= image %>
-                    </div>
-
-                <%
-                    } else {
-                %>
-
-                    <div class="no-image">
-                        No Image Available
-                    </div>
-
-                <%
-                    }
-                %>
-
+                <div class="product-icon">
+                    <%= image %>
+                </div>
             </div>
 
-
             <!-- PRODUCT INFORMATION -->
-
             <div class="product-info">
 
-                <h2>
-                    <%= product.getName() %>
-                </h2>
-
+                <h2><%= product.getName() %></h2>
 
                 <span class="category">
                     <%= product.getCategory() %>
                 </span>
-
 
                 <div class="price">
                     &#8377;<%= String.format("%.2f",
                             product.getPrice()) %>
                 </div>
 
-
                 <div class="description">
-                    <%= product.getDescription() %>
+                    <%= product.getDescription() == null
+                            ? ""
+                            : product.getDescription() %>
                 </div>
-
 
                 <div class="buttons">
 
                     <!-- ADD TO CART -->
-
-                    <a href="cart?name=<%= URLEncoder.encode(
-                            product.getName(), "UTF-8") %>&category=<%= URLEncoder.encode(
-                            product.getCategory(), "UTF-8") %>&price=<%= product.getPrice() %>&icon=<%= URLEncoder.encode(
-                            image, "UTF-8") %>"
+                    <a href="cart?id=<%= product.getId() %>"
                        class="btn cart-btn">
-
                         Add to Cart
-
                     </a>
 
-
                     <!-- BACK -->
-
                     <a href="products"
                        class="btn back-btn">
-
                         &#8592; Back to Products
-
                     </a>
 
                 </div>
-
             </div>
-
         </div>
-
     </div>
 
 </body>
-
 </html>

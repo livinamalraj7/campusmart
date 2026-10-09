@@ -7,624 +7,434 @@
 <html lang="en">
 
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-
-<title>Products | CampusMart</title>
-
-<style>
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
-
-body {
-    background: #f1f5f9;
-    color: #172554;
-}
-
-/* NAVBAR */
-
-.navbar {
-    background: #172554;
-    color: white;
-    padding: 18px 7%;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.logo {
-    font-size: 26px;
-    font-weight: bold;
-}
-
-.logo span {
-    color: #60a5fa;
-}
-
-.nav-links {
-    display: flex;
-    align-items: center;
-    gap: 28px;
-}
-
-.nav-links a {
-    color: white;
-    text-decoration: none;
-    font-size: 15px;
-}
-
-.nav-links a:hover {
-    color: #93c5fd;
-}
-
-/* PAGE HEADER */
-
-.page-header {
-    text-align: center;
-    padding: 50px 20px 30px;
-}
-
-.page-header h1 {
-    font-size: 38px;
-    margin-bottom: 10px;
-}
-
-.page-header p {
-    color: #64748b;
-    font-size: 17px;
-}
-
-/* ERROR MESSAGE */
-
-.error-message {
-    width: 86%;
-    max-width: 900px;
-    margin: 0 auto 25px;
-
-    background: #fee2e2;
-    color: #b91c1c;
-
-    border: 1px solid #fecaca;
-    border-radius: 8px;
-
-    padding: 12px 16px;
-
-    text-align: center;
-
-    font-size: 14px;
-    font-weight: bold;
-}
-
-/* CATEGORY FILTER */
-
-.category-filter {
-    width: 86%;
-    margin: 0 auto 30px;
-
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-
-    gap: 12px;
-}
-
-.filter-btn {
-    background: white;
-    color: #172554;
-
-    padding: 10px 18px;
-
-    border-radius: 20px;
-
-    text-decoration: none;
-
-    font-size: 14px;
-    font-weight: bold;
-
-    border: 1px solid #dbeafe;
-
-    transition: 0.2s;
-}
-
-.filter-btn:hover {
-    background: #2563eb;
-    color: white;
-    border-color: #2563eb;
-}
-
-/* PRODUCTS */
-
-.products-container {
-    width: 86%;
-    margin: auto;
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(auto-fit, minmax(240px, 1fr));
-
-    gap: 25px;
-
-    padding-bottom: 50px;
-}
-
-.product-card {
-    background: white;
-
-    border-radius: 12px;
-
-    padding: 20px;
-
-    box-shadow:
-        0 4px 15px rgba(0, 0, 0, 0.08);
-
-    transition: transform 0.2s;
-}
-
-.product-card:hover {
-    transform: translateY(-5px);
-}
-
-/* PRODUCT IMAGE / EMOJI */
-
-.product-image {
-    height: 150px;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    font-size: 70px;
-
-    line-height: 1;
-
-    background: #eff6ff;
-
-    border-radius: 10px;
-
-    margin-bottom: 18px;
-
-    overflow: hidden;
-}
-
-/* CATEGORY */
-
-.category {
-    color: #2563eb;
-
-    font-size: 13px;
-
-    font-weight: bold;
-
-    margin-bottom: 7px;
-
-    text-transform: uppercase;
-}
-
-/* PRODUCT NAME */
-
-.product-card h2 {
-    font-size: 20px;
-
-    margin-bottom: 8px;
-}
-
-/* DESCRIPTION */
-
-.description {
-    color: #64748b;
-
-    font-size: 14px;
-
-    line-height: 1.5;
-
-    min-height: 42px;
-}
-
-/* BOTTOM */
-
-.product-bottom {
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    margin-top: 18px;
-
-    gap: 10px;
-}
-
-.price {
-    font-size: 20px;
-
-    font-weight: bold;
-
-    color: #172554;
-}
-
-/* BUTTONS */
-
-.button-group {
-    display: flex;
-
-    gap: 8px;
-
-    align-items: center;
-}
-
-.add-btn {
-    background: #2563eb;
-
-    color: white;
-
-    border: none;
-
-    padding: 9px 14px;
-
-    border-radius: 6px;
-
-    cursor: pointer;
-
-    font-weight: bold;
-
-    text-decoration: none;
-
-    display: inline-block;
-}
-
-.add-btn:hover {
-    background: #1d4ed8;
-}
-
-.details-btn {
-    background: #e2e8f0;
-
-    color: #172554;
-
-    padding: 9px 14px;
-
-    border-radius: 6px;
-
-    text-decoration: none;
-
-    font-weight: bold;
-
-    display: inline-block;
-}
-
-.details-btn:hover {
-    background: #cbd5e1;
-}
-
-/* EMPTY MESSAGE */
-
-.empty-message {
-    text-align: center;
-
-    grid-column: 1 / -1;
-
-    padding: 50px;
-
-    color: #64748b;
-}
-
-/* MOBILE */
-
-@media (max-width: 600px) {
-
-    .navbar {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .nav-links {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 15px;
-    }
-
-    .product-bottom {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .button-group {
-        justify-content: center;
-    }
-
-}
-
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products | CampusMart</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f1f5f9;
+            color: #172554;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background: #172554;
+            color: white;
+            padding: 18px 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #60a5fa;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        .nav-links a:hover {
+            color: #93c5fd;
+        }
+
+        /* PAGE HEADER */
+        .page-header {
+            text-align: center;
+            padding: 50px 20px 30px;
+        }
+
+        .page-header h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            color: #64748b;
+            font-size: 17px;
+        }
+
+        /* ERROR MESSAGE */
+        .error-message {
+            width: 86%;
+            max-width: 900px;
+            margin: 0 auto 25px;
+            background: #fee2e2;
+            color: #b91c1c;
+            border: 1px solid #fecaca;
+            border-radius: 8px;
+            padding: 12px 16px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* CATEGORY FILTER */
+        .category-filter {
+            width: 86%;
+            margin: 0 auto 30px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .filter-btn {
+            background: white;
+            color: #172554;
+            padding: 10px 18px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            border: 1px solid #dbeafe;
+            transition: 0.2s;
+        }
+
+        .filter-btn:hover {
+            background: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+
+        /* PRODUCTS */
+        .products-container {
+            width: 86%;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+            padding-bottom: 50px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* PRODUCT IMAGE / EMOJI */
+        .product-image {
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 70px;
+            line-height: 1;
+            background: #eff6ff;
+            border-radius: 10px;
+            margin-bottom: 18px;
+            overflow: hidden;
+        }
+
+        /* CATEGORY */
+        .category {
+            color: #2563eb;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 7px;
+            text-transform: uppercase;
+        }
+
+        /* PRODUCT NAME */
+        .product-card h2 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        /* DESCRIPTION */
+        .description {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.5;
+            min-height: 42px;
+        }
+
+        /* BOTTOM */
+        .product-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 18px;
+            gap: 10px;
+        }
+
+        .price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #172554;
+        }
+
+        /* BUTTONS */
+        .button-group {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .add-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 9px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .add-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .details-btn {
+            background: #e2e8f0;
+            color: #172554;
+            padding: 9px 14px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .details-btn:hover {
+            background: #cbd5e1;
+        }
+
+        /* EMPTY MESSAGE */
+        .empty-message {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 50px;
+            color: #64748b;
+        }
+
+        /* MOBILE */
+        @media (max-width: 600px) {
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .product-bottom {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .button-group {
+                justify-content: center;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
-
-<nav class="navbar">
-
-    <div class="logo">
-        🎓 Campus<span>Mart</span>
-    </div>
-
-    <div class="nav-links">
-
-        <a href="index.jsp">
-            Home
-        </a>
-
-        <a href="products">
-            Products
-        </a>
-
-        <a href="cart">
-            🛒 Cart
-        </a>
-
-        <a href="my-orders">
-            📦 My Orders
-        </a>
-
-        <a href="login.jsp">
-            Login
-        </a>
-
-    </div>
-
-</nav>
-
-
-<!-- PAGE HEADER -->
-
-<section class="page-header">
-
-    <h1>CampusMart Products</h1>
-
-    <p>
-        Find everything you need for your college life.
-    </p>
-
-</section>
-
-
-<!-- ERROR MESSAGES -->
-
-<%
-    String error = request.getParameter("error");
-%>
-
-<% if ("invalid".equals(error)) { %>
-
-    <div class="error-message">
-        Invalid product request. Please select a valid product.
-    </div>
-
-<% } else if ("notfound".equals(error)) { %>
-
-    <div class="error-message">
-        Sorry, the product you are looking for was not found.
-    </div>
-
-<% } else if ("server".equals(error)) { %>
-
-    <div class="error-message">
-        Something went wrong while loading the product.
-        Please try again later.
-    </div>
-
-<% } %>
-
-
-<!-- CATEGORY FILTER -->
-
-<%
-    String selectedCategory =
-            request.getParameter("category");
-%>
-
-<div class="category-filter">
-
-    <a href="products"
-       class="filter-btn">
-        All
-    </a>
-
-    <a href="products?category=Books"
-       class="filter-btn">
-        Books
-    </a>
-
-    <a href="products?category=Electronics"
-       class="filter-btn">
-        Electronics
-    </a>
-
-    <a href="products?category=Stationery"
-       class="filter-btn">
-        Stationery
-    </a>
-
-    <a href="products?category=Lab%20Essentials"
-       class="filter-btn">
-        Lab Essentials
-    </a>
-
-</div>
-
-
-<!-- PRODUCTS -->
-
-<div class="products-container">
-
-<%
-    List<Product> products =
-            (List<Product>) request.getAttribute("products");
-
-    if (products != null && !products.isEmpty()) {
-
-        for (Product product : products) {
-
-            String name =
-                    URLEncoder.encode(
-                            product.getName(),
-                            "UTF-8"
-                    );
-
-            String category =
-                    URLEncoder.encode(
-                            product.getCategory(),
-                            "UTF-8"
-                    );
-
-            String image = "";
-
-            if (product.getImage() != null) {
-
-                image =
-                        URLEncoder.encode(
-                                product.getImage(),
-                                "UTF-8"
-                        );
-            }
-
-            String price =
-                    String.valueOf(
-                            product.getPrice()
-                    );
-%>
-
-    <!-- PRODUCT CARD -->
-
-    <div class="product-card">
-
-        <!-- EMOJI / IMAGE DISPLAY -->
-
-        <div class="product-image">
-
-            <%
-                if (product.getImage() != null &&
-                    !product.getImage().trim().isEmpty()) {
-            %>
-
-                <%= product.getImage() %>
-
-            <%
-                } else {
-            %>
-
-                📦
-
-            <%
-                }
-            %>
-
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="logo">
+            🎓 Campus<span>Mart</span>
         </div>
 
-
-        <!-- CATEGORY -->
-
-        <div class="category">
-
-            <%= product.getCategory() %>
-
+        <div class="nav-links">
+            <a href="index.jsp">Home</a>
+            <a href="products">Products</a>
+            <a href="cart">🛒 Cart</a>
+            <a href="my-orders">📦 My Orders</a>
+            <a href="login.jsp">Login</a>
         </div>
+    </nav>
 
+    <!-- PAGE HEADER -->
+    <section class="page-header">
+        <h1>CampusMart Products</h1>
+        <p>Find everything you need for your college life.</p>
+    </section>
 
-        <!-- PRODUCT NAME -->
+    <!-- ERROR MESSAGES -->
+    <%
+        String error = request.getParameter("error");
+    %>
 
-        <h2>
+    <% if ("invalid".equals(error)) { %>
+        <div class="error-message">
+            Invalid product request. Please select a valid product.
+        </div>
+    <% } else if ("notfound".equals(error)) { %>
+        <div class="error-message">
+            Sorry, the product you are looking for was not found.
+        </div>
+    <% } else if ("server".equals(error)) { %>
+        <div class="error-message">
+            Something went wrong while loading the product.
+            Please try again later.
+        </div>
+    <% } %>
 
-            <%= product.getName() %>
+    <!-- CATEGORY FILTER -->
+    <%
+        String selectedCategory = request.getParameter("category");
+    %>
 
-        </h2>
+    <div class="category-filter">
+        <a href="products" class="filter-btn">All</a>
+        <a href="products?category=Books" class="filter-btn">Books</a>
+        <a href="products?category=Electronics" class="filter-btn">Electronics</a>
+        <a href="products?category=Stationery" class="filter-btn">Stationery</a>
+        <a href="products?category=Lab%20Essentials" class="filter-btn">
+            Lab Essentials
+        </a>
+    </div>
 
+    <!-- PRODUCTS -->
+    <div class="products-container">
 
-        <!-- DESCRIPTION -->
+        <%
+            List<Product> products =
+                    (List<Product>) request.getAttribute("products");
 
-        <p class="description">
+            if (products != null && !products.isEmpty()) {
 
-            <%= product.getDescription() %>
+                for (Product product : products) {
 
-        </p>
+                    String name = URLEncoder.encode(
+                            product.getName(), "UTF-8");
 
+                    String category = URLEncoder.encode(
+                            product.getCategory(), "UTF-8");
 
-        <!-- PRICE + BUTTONS -->
+                    String productImage = product.getImage();
+                    String productCategory = product.getCategory();
 
-        <div class="product-bottom">
+                    /*
+                     * Replace corrupted or empty database icons
+                     * with a category-based emoji.
+                     */
+                    if (productImage == null
+                            || productImage.trim().isEmpty()
+                            || productImage.matches("\\?+")) {
 
-            <span class="price">
+                        if ("Books".equalsIgnoreCase(productCategory)) {
+                            productImage = "📚";
+                        } else if ("Electronics".equalsIgnoreCase(productCategory)) {
+                            productImage = "🧮";
+                        } else if ("Stationery".equalsIgnoreCase(productCategory)) {
+                            productImage = "📒";
+                        } else if ("Lab Essentials".equalsIgnoreCase(productCategory)) {
+                            productImage = "🥼";
+                        } else {
+                            productImage = "📦";
+                        }
+                    }
 
-                ₹<%= String.format(
-                        "%.0f",
-                        product.getPrice()
-                    ) %>
+                    /*
+                     * Use the same corrected icon in the cart link.
+                     */
+                    String image = URLEncoder.encode(
+                            productImage, "UTF-8");
 
-            </span>
+                    String price = String.valueOf(product.getPrice());
+        %>
 
+            <!-- PRODUCT CARD -->
+            <div class="product-card">
 
-            <div class="button-group">
+                <!-- EMOJI / IMAGE DISPLAY -->
+                <div class="product-image">
+                    <%= productImage %>
+                </div>
 
-                <!-- VIEW DETAILS -->
+                <!-- CATEGORY -->
+                <div class="category">
+                    <%= product.getCategory() %>
+                </div>
 
-                <a
-                    href="product-details?id=<%= product.getId() %>"
-                    class="details-btn">
+                <!-- PRODUCT NAME -->
+                <h2>
+                    <%= product.getName() %>
+                </h2>
 
-                    View Details
+                <!-- DESCRIPTION -->
+                <p class="description">
+                    <%= product.getDescription() %>
+                </p>
 
-                </a>
+                <!-- PRICE + BUTTONS -->
+                <div class="product-bottom">
 
+                    <span class="price">
+                        ₹<%= String.format("%.0f", product.getPrice()) %>
+                    </span>
 
-                <!-- ADD TO CART -->
+                    <div class="button-group">
 
-                <a
-                    href="cart?name=<%= name %>&category=<%= category %>&price=<%= price %>&icon=<%= image %>"
-                    class="add-btn">
+                        <!-- VIEW DETAILS -->
+                        <a
+                            href="product-details?id=<%= product.getId() %>"
+                            class="details-btn">
+                            View Details
+                        </a>
 
-                    Add to Cart
+                        <!-- ADD TO CART -->
+                        <a
+                            href="cart?name=<%= name %>&category=<%= category %>&price=<%= price %>&icon=<%= image %>"
+                            class="add-btn">
+                            Add to Cart
+                        </a>
 
-                </a>
-
+                    </div>
+                </div>
             </div>
 
-        </div>
+        <%
+                }
+            } else {
+        %>
+
+            <div class="empty-message">
+                <h2>No products available</h2>
+                <p>Please check back later.</p>
+            </div>
+
+        <%
+            }
+        %>
 
     </div>
-
-<%
-        }
-
-    } else {
-%>
-
-    <div class="empty-message">
-
-        <h2>No products available</h2>
-
-        <p>
-            Please check back later.
-        </p>
-
-    </div>
-
-<%
-    }
-%>
-
-</div>
 
 </body>
-
 </html>
